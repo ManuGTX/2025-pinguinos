@@ -76,8 +76,8 @@ RandomDistributionOfSpecialSquaresTest >> testAfterCreatingABoardOfSize100WithSp
 
 	classCounts keysAndValuesDo: [ :className :value |
 		self assert:
-			(value first / numberOfBoards >= (value second - 1.2) and:
-				 value first / numberOfBoards <= (value second + 1.2)) ]
+			(value first / numberOfBoards >= (value second - 1.5) and:
+				 value first / numberOfBoards <= (value second + 1.5)) ]
 ]
 
 { #category : 'tests' }

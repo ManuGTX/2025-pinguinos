@@ -50,6 +50,13 @@ CardManager >> applyLastSquareEffectTo: aShip [
 	board applyLastSquareEffectTo: aShip in: game
 ]
 
+{ #category : 'verification' }
+CardManager >> checkContractor: aContractorShip andContractee: aContractedShip [
+
+	self isContractor: aContractorShip theContractee: aContractedShip.
+	self isContractedShipAlreadyContracted: aContractedShip.
+]
+
 { #category : 'getter' }
 CardManager >> getAlliesOf: aShip [
 
@@ -125,6 +132,18 @@ CardManager >> playCard: aCard by: aShip target: aTarget [
 
 	aShip removeCard: aCard.
 	discardPile add: aCard.
+]
+
+{ #category : 'card usage' }
+CardManager >> playLastUsedCardFrom: anActivatorShip target: aTarget [
+	
+	| cardHistory |
+	
+	cardHistory := discardPile select: [ :usedCard | usedCard isRepeatable ].
+	
+	cardHistory ifEmpty: [ Error signal: 'No replayable cards have been played yet, this card cannot be used!' ].
+	
+	(cardHistory last) managedBy: self from: anActivatorShip target: aTarget.
 ]
 
 { #category : 'adding' }
