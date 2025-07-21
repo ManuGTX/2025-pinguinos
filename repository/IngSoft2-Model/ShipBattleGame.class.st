@@ -5,7 +5,8 @@ Class {
 	#name : 'ShipBattleGame',
 	#superclass : 'Game',
 	#instVars : [
-		'cardManager'
+		'cardManager',
+		'squareDistribution'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -42,6 +43,17 @@ ShipBattleGame class >> inSize: aSize rounds: aRoundNumber with: aDiceSet and: a
 		  and: aSetOfShips
 		  withSpecialSquaresAt: squarePositions
 		  withDeck: aDeck.
+]
+
+{ #category : 'instance creation' }
+ShipBattleGame class >> inSize: aSize withSquareDistribution: aSquareDistribution rounds: aRoundNumber with: aDiceSet and: aSetOfShips [ 
+
+	^ self new
+		  initializeInSize: aSize
+		  withSquareDistribution: aSquareDistribution
+		  rounds: aRoundNumber
+		  with: aDiceSet
+		  and: aSetOfShips
 ]
 
 { #category : 'accessing' }
@@ -177,9 +189,16 @@ ShipBattleGame >> haveWeGotAWinner: currentShip [
 { #category : 'initialization' }
 ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet and: aSetOfShips [
 
-	board := CircularBoard
-		         withRandomSpecialSquaresAndSize: aSize
-		         rounds: aRoundNumber.
+	squareDistribution := (Dictionary newFrom: {
+				 ('Black Hole' -> 20).
+				 ('Hyper Space Jump' -> 20).
+				 ('Moon Walk' -> 10).
+				 ('Hyper Jump' -> 8).
+				 ('Atomic Bomb' -> 2).
+ 				 ('Empty' -> 30). 
+				 ('Card Giver' -> 10)}).
+	
+	board := CircularBoardBuilder buildWithSize: aSize withNumberOfRounds: aRoundNumber andDistribution: squareDistribution.
 
 	diceSet := DiceSet withDice: aDiceSet.
 
@@ -198,8 +217,8 @@ ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet an
 { #category : 'initialization' }
 ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet and: aSetOfShips withSpecialSquaresAt: squarePositions [
 
-	board := CircularBoard
-		         withSize: aSize
+	board := CircularBoardBuilder
+		         buildWithSize: aSize
 		         rounds: aRoundNumber
 		         withSpecialSquaresAt: squarePositions.
 
@@ -220,8 +239,8 @@ ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet an
 { #category : 'initialization' }
 ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet and: aSetOfShips withSpecialSquaresAt: squarePositions withDeck: aDeck [
 
-	board := CircularBoard
-		         withSize: aSize
+	board := CircularBoardBuilder
+		         buildWithSize: aSize
 		         rounds: aRoundNumber
 		         withSpecialSquaresAt: squarePositions.
 
@@ -236,6 +255,25 @@ ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet an
 		               board: board
 		               deck: aDeck
 							game: self.
+
+	shipToMove := 1.
+	gameOver := false.
+	gameWinner := nil.
+]
+
+{ #category : 'initialization' }
+ShipBattleGame >> initializeInSize: aSize withSquareDistribution: aSquareDistribution rounds: aRoundNumber with: aDiceSet and: aSetOfShips [
+
+	board := CircularBoardBuilder buildWithSize: aSize withNumberOfRounds: aRoundNumber andDistribution: squareDistribution.
+
+	diceSet := DiceSet withDice: aDiceSet.
+
+	ships := self orderShips: aSetOfShips.
+	
+	cardManager := NullCardManager 
+		               ships: ships
+		               board: board
+		               deck: nil.
 
 	shipToMove := 1.
 	gameOver := false.

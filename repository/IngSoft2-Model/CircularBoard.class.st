@@ -14,6 +14,15 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'creation' }
+CircularBoard class >> buildWithSize: aSize rounds: aRoundNumber withSpecialSquaresAt: squarePositions [
+	
+	self validateSquarePositionsAreWithinBounds: squarePositions of: aSize.
+
+	^ (self withSize: aSize rounds: aRoundNumber)
+		  initializeWithSpecialSquaresAt: squarePositions
+]
+
 { #category : 'validation' }
 CircularBoard class >> validate: aSquareType in: squarePositions areWithinBoundsOf: aSize [
 
@@ -81,31 +90,11 @@ CircularBoard class >> validateWormHolesIn: squarePositions areWithinBoundsOf: a
 ]
 
 { #category : 'creation' }
-CircularBoard class >> withRandomSpecialSquaresAndSize: aSize rounds: aRoundNumber [
-
-	self validateRoundNumberIsPositive: aRoundNumber.
-	self validateSizeIsPositive: aSize.
-
-
-	^ (self withSize: aSize rounds: aRoundNumber)
-		  initializeRandomSpecialSquares
-]
-
-{ #category : 'creation' }
 CircularBoard class >> withSize: aSize rounds: aRoundNumber [
 
 	self validateRoundNumberIsPositive: aRoundNumber.
 	self validateSizeIsPositive: aSize.
 	^ self new initializeWithSize: aSize rounds: aRoundNumber
-]
-
-{ #category : 'creation' }
-CircularBoard class >> withSize: aSize rounds: aRoundNumber withSpecialSquaresAt: squarePositions [
-	
-	self validateSquarePositionsAreWithinBounds: squarePositions of: aSize.
-
-	^ (self withSize: aSize rounds: aRoundNumber)
-		  initializeWithSpecialSquaresAt: squarePositions
 ]
 
 { #category : 'process' }
@@ -183,54 +172,6 @@ CircularBoard >> createWormHolesAt: squarePositions [
 CircularBoard >> getSquareAt: aPosition [
 
 	^ map at: aPosition - 1 \\ boardSize + 1
-]
-
-{ #category : 'initialization' }
-CircularBoard >> initializeRandomSpecialSquares [
-
-	| blackHoles hyperSpaceJumps moonWalks hyperJumps atomicBombs resultForEachCell cardGivers emptySquares |
-	
-	blackHoles := OrderedCollection new.
-	hyperSpaceJumps := OrderedCollection new.
-	moonWalks := OrderedCollection new.
-	hyperJumps := OrderedCollection new.
-	atomicBombs := OrderedCollection new.
-	cardGivers := OrderedCollection new.
-	emptySquares := OrderedCollection new.
-	
-	"Tiro un numero random por cada casillero "
-	resultForEachCell := OrderedCollection new.
-	boardSize timesRepeat: [ resultForEachCell add: (1 to: 100) atRandom ].
-
-	resultForEachCell doWithIndex: [ :result :i |
-		(100 >= result and: result > 70) ifTrue: [ emptySquares add: i ] ].
-
-	resultForEachCell doWithIndex: [ :result :i |
-		(70 >= result and: result > 60) ifTrue: [ cardGivers add: i ] ].
-	
-	resultForEachCell doWithIndex: [ :result :i |
-		(60 >= result and: result > 40) ifTrue: [ blackHoles add: i ] ].
-
-	resultForEachCell doWithIndex: [ :result :i |
-		(40 >= result and: result > 20) ifTrue: [ hyperSpaceJumps add: i ] ].
-
-	resultForEachCell doWithIndex: [ :result :i |
-		(20 >= result and: result > 10) ifTrue: [ moonWalks add: {i. (1 to: 5) atRandom} ] ].  "{posicion. N del moonwalk}"
-
-	resultForEachCell doWithIndex: [ :result :i |
-		(10 >= result and: result > 2) ifTrue: [ hyperJumps add: i ] ].
-
-	resultForEachCell doWithIndex: [ :result :i |
-		(2 >= result and: result > 0) ifTrue: [ atomicBombs add: i ] ].
-
-	self initializeWithSpecialSquaresAt: (Dictionary newFrom: {
-				 ('BlackHoles' -> blackHoles).
-				 ('HyperSpaceJumps' -> hyperSpaceJumps).
-				 ('MoonWalks' -> moonWalks).
-				 ('HyperJumps' -> hyperJumps).
-				 ('AtomicBombs' -> atomicBombs).
- 				 ('EmptySquares' -> emptySquares ). 
-				 ('CardGivers' -> cardGivers )})
 ]
 
 { #category : 'initialization' }
