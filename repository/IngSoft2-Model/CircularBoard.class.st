@@ -3,10 +3,12 @@ Circular board class for board game; has a number of rounds to play in the same 
 "
 Class {
 	#name : 'CircularBoard',
-	#superclass : 'Board',
+	#superclass : 'Object',
 	#instVars : [
 		'rounds',
-		'lastSquareEffectUsed'
+		'lastSquareEffectUsed',
+		'boardSize',
+		'map'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -39,6 +41,13 @@ CircularBoard class >> validateRoundNumberIsPositive: aRoundNumber [
 
 	aRoundNumber < 1 ifTrue: [
 		Error signal: 'Round number for the board must be positive.' ]
+]
+
+{ #category : 'validation' }
+CircularBoard class >> validateSizeIsPositive: aSize [
+
+	aSize <= 0 ifTrue: [
+		Error signal: 'Size for the grid must be positive.' ]
 ]
 
 { #category : 'validation' }
@@ -75,7 +84,7 @@ CircularBoard class >> validateWormHolesIn: squarePositions areWithinBoundsOf: a
 CircularBoard class >> withRandomSpecialSquaresAndSize: aSize rounds: aRoundNumber [
 
 	self validateRoundNumberIsPositive: aRoundNumber.
-	Board validateSizeIsPositive: aSize.
+	self validateSizeIsPositive: aSize.
 
 
 	^ (self withSize: aSize rounds: aRoundNumber)
@@ -86,7 +95,7 @@ CircularBoard class >> withRandomSpecialSquaresAndSize: aSize rounds: aRoundNumb
 CircularBoard class >> withSize: aSize rounds: aRoundNumber [
 
 	self validateRoundNumberIsPositive: aRoundNumber.
-	Board validateSizeIsPositive: aSize.
+	self validateSizeIsPositive: aSize.
 	^ self new initializeWithSize: aSize rounds: aRoundNumber
 ]
 
@@ -170,6 +179,12 @@ CircularBoard >> createWormHolesAt: squarePositions [
 		map at: position second put: wormHoleEnds second ]
 ]
 
+{ #category : 'accessing' }
+CircularBoard >> getSquareAt: aPosition [
+
+	^ map at: aPosition - 1 \\ boardSize + 1
+]
+
 { #category : 'initialization' }
 CircularBoard >> initializeRandomSpecialSquares [
 
@@ -219,9 +234,20 @@ CircularBoard >> initializeRandomSpecialSquares [
 ]
 
 { #category : 'initialization' }
+CircularBoard >> initializeWithSize: aSize [
+
+	boardSize := aSize.
+
+	map := OrderedCollection new.
+
+	1 to: boardSize do: [ :x | map add: (Square x: x) ].
+	
+]
+
+{ #category : 'initialization' }
 CircularBoard >> initializeWithSize: aSize rounds: aRoundNumber [
 
-	super initializeWithSize: aSize. "Llamo a funcion de clase padre"
+	self initializeWithSize: aSize. 
 
 	rounds := aRoundNumber.
 ]
