@@ -104,6 +104,19 @@ CardManager >> initializeWithShips: aSetOfShips withBoard: aBoard withDeck: aDec
 	^ self
 ]
 
+{ #category : 'testing' }
+CardManager >> isContractedShipAlreadyContracted: aContractedShip [
+
+	(self getContractedShips includes: aContractedShip) ifTrue: [
+		Error signal: 'A ship cannot contract as mercenary a ship that has already been contracted by someone else!' ]
+]
+
+{ #category : 'testing' }
+CardManager >> isContractor: aContractorShip theContractee: aContractedShip [
+
+	aContractorShip = aContractedShip ifTrue: [ Error signal: 'A ship cannot contract itself as a mercenary!' ]
+]
+
 { #category : 'card usage' }
 CardManager >> playCard: aCard by: aShip target: aTarget [
 
