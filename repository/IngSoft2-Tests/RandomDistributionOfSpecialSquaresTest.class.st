@@ -15,7 +15,7 @@ RandomDistributionOfSpecialSquaresTest >> testAfterCreatingABoardOfSize100WithSe
 
 	"dict['nombre clase'] = { numero de ocurrencias . probabilidad de aparecer de cada clase de cuadrado }"
 	classCounts at: 'EmptySquare' put: { 0. 30 }.
-	classCounts at: 'Blackhole' put: { 0. 20 }.
+	classCounts at: 'BlackHole' put: { 0. 20 }.
 	classCounts at: 'HyperSpaceJump' put: { 0. 20 }.
 	classCounts at: 'MoonWalk' put: { 0. 10 }.
 	classCounts at: 'HyperJump' put: { 0. 8 }.
@@ -41,6 +41,6 @@ RandomDistributionOfSpecialSquaresTest >> testAfterCreatingABoardOfSize100WithSe
 
 	"Observo que cada cuadrado aparezca ± 10 veces del valor esperado"
 	classCounts keysAndValuesDo: [ :className :value |
-		self assert: ((value first / numberOfBoards) <= (value second + 1) and:
-				 (value first / numberOfBoards) <= (value second + 1)) ]
+		self assert: ((value first / numberOfBoards) between: (value second - 1) and: (value second + 1)) 
+		]
 ]

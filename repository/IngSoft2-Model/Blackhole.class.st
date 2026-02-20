@@ -2,14 +2,14 @@
 Blackhole in grid for the game; to be occupied with a ship, which comes out from the other end.
 "
 Class {
-	#name : 'Blackhole',
+	#name : 'BlackHole',
 	#superclass : 'Square',
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'action' }
-Blackhole >> applyEffectTo: aShip in: aGame [
+BlackHole >> applyEffectTo: aShip in: aGame [
 
 	| boardSize originalPosition aDestination |
 	boardSize := aGame boardSize.

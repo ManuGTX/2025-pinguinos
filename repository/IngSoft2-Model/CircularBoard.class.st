@@ -3,10 +3,12 @@ Circular board class for board game; has a number of rounds to play in the same 
 "
 Class {
 	#name : 'CircularBoard',
-	#superclass : 'Board',
+	#superclass : 'Object',
 	#instVars : [
 		'rounds',
-		'lastSquareEffectUsed'
+		'lastSquareEffectUsed',
+		'map',
+		'boardSize'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -72,6 +74,12 @@ CircularBoard class >> validateWormHolesIn: squarePositions areWithinBoundsOf: a
 ]
 
 { #category : 'creation' }
+CircularBoard class >> withMap: aMap ofSize: aBoardSize andNumberOfRounds: aNumberOfRounds [
+
+	^ self new initializeWithMap: aMap ofSize: aBoardSize andNumberOfRounds: aNumberOfRounds
+]
+
+{ #category : 'creation' }
 CircularBoard class >> withRandomSpecialSquaresAndSize: aSize rounds: aRoundNumber [
 
 	self validateRoundNumberIsPositive: aRoundNumber.
@@ -117,13 +125,14 @@ CircularBoard >> createBlackHolesAt: aSquarePositions [
 
 	aSquarePositions do: [ :position |
 "		map at: position put: (Blackhole at: position in: self) ]"
-		map at: position put: (Blackhole x: position )]
+		map at: position put: (BlackHole x: position )]
 ]
 
 { #category : 'accessing' }
 CircularBoard >> createCardGiversAt: squarePositions [
 
-	squarePositions do: [:position | map at: position put: (CardGiver at: position with: Deck new) ].
+	squarePositions do: [ :position |
+		map at: position put: (CardGiver at: position with: Deck new) ]
 ]
 
 { #category : 'accessing' }
@@ -168,6 +177,12 @@ CircularBoard >> createWormHolesAt: squarePositions [
 		map at: position first put: wormHoleEnds first.
 
 		map at: position second put: wormHoleEnds second ]
+]
+
+{ #category : 'accessing' }
+CircularBoard >> getSquareAt: aPosition [
+
+	^ map at: aPosition - 1 \\ boardSize + 1
 ]
 
 { #category : 'initialization' }
@@ -219,9 +234,29 @@ CircularBoard >> initializeRandomSpecialSquares [
 ]
 
 { #category : 'initialization' }
+CircularBoard >> initializeWithMap: aMap ofSize: aBoardSize andNumberOfRounds: aNumberOfRounds [
+
+	boardSize := aBoardSize.
+
+	map := aMap copy.
+
+	rounds := aNumberOfRounds.
+]
+
+{ #category : 'initialization' }
+CircularBoard >> initializeWithSize: aSize [
+
+	boardSize := aSize.
+
+	map := OrderedCollection new.
+
+	1 to: boardSize do: [ :x | map add: (Square x: x) ].
+]
+
+{ #category : 'initialization' }
 CircularBoard >> initializeWithSize: aSize rounds: aRoundNumber [
 
-	super initializeWithSize: aSize. "Llamo a funcion de clase padre"
+	self initializeWithSize: aSize. 
 
 	rounds := aRoundNumber.
 ]
@@ -243,7 +278,7 @@ CircularBoard >> initializeWithSpecialSquaresAt: squarePositions [
 CircularBoard >> lastEffectUsed: aSpecialSquare [
 
 	| onlySpecialSquares |
-	onlySpecialSquares := { AtomicBomb. MoonWalk. CardGiver. HyperJump. Wormhole .Blackhole .HyperSpaceJump}.
+	onlySpecialSquares := { AtomicBomb. MoonWalk. CardGiver. HyperJump. Wormhole .BlackHole .HyperSpaceJump}.
 
 	(onlySpecialSquares anySatisfy: [ :class | aSpecialSquare isKindOf: class ])
 		ifTrue: [ lastSquareEffectUsed := aSpecialSquare].
