@@ -177,9 +177,25 @@ ShipBattleGame >> haveWeGotAWinner: currentShip [
 { #category : 'initialization' }
 ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet and: aSetOfShips [
 
-	board := CircularBoard
-		         withRandomSpecialSquaresAndSize: aSize
-		         rounds: aRoundNumber.
+	| aBoardBuilder probabilityDistribution |
+	
+	probabilityDistribution := Dictionary new.
+
+	probabilityDistribution at: 'EmptySquare' put: 30.
+	probabilityDistribution at: 'BlackHole' put: 20.
+	probabilityDistribution at: 'HyperSpaceJump' put: 20.
+	probabilityDistribution at: 'MoonWalk' put: 10.
+	probabilityDistribution at: 'HyperJump' put: 8.
+	probabilityDistribution at: 'AtomicBomb' put: 2.
+	probabilityDistribution at: 'CardGiver' put: 10.
+	
+	aBoardBuilder := CircularBoardBuilder new.
+	
+	aBoardBuilder setNumberOfRounds: aRoundNumber.
+	aBoardBuilder setBoardSize: aSize.
+	aBoardBuilder setSquareProbabilities: probabilityDistribution.
+	
+	board := aBoardBuilder build.
 
 	diceSet := DiceSet withDice: aDiceSet.
 
@@ -197,11 +213,16 @@ ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet an
 
 { #category : 'initialization' }
 ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet and: aSetOfShips withSpecialSquaresAt: squarePositions [
-
-	board := CircularBoard
-		         withSize: aSize
-		         rounds: aRoundNumber
-		         withSpecialSquaresAt: squarePositions.
+	
+	| aBoardBuilder |
+	
+	aBoardBuilder := CircularBoardBuilder new.
+	
+	aBoardBuilder setNumberOfRounds: aRoundNumber.
+	aBoardBuilder setBoardSize: aSize.
+	aBoardBuilder setSquares: squarePositions.
+	
+	board := aBoardBuilder build.
 
 	diceSet := DiceSet withDice: aDiceSet.
 
@@ -220,10 +241,15 @@ ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet an
 { #category : 'initialization' }
 ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet and: aSetOfShips withSpecialSquaresAt: squarePositions withDeck: aDeck [
 
-	board := CircularBoard
-		         withSize: aSize
-		         rounds: aRoundNumber
-		         withSpecialSquaresAt: squarePositions.
+	| aBoardBuilder |
+	
+	aBoardBuilder := CircularBoardBuilder new.
+	
+	aBoardBuilder setNumberOfRounds: aRoundNumber.
+	aBoardBuilder setBoardSize: aSize.
+	aBoardBuilder setSquares: squarePositions.
+	
+	board := aBoardBuilder build.
 
 	diceSet := DiceSet withDice: aDiceSet.
 

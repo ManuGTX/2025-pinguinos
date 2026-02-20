@@ -30,7 +30,7 @@ WormholeTest >> testPlayerCantCreateWormHolesOutsideCircularBoard [
 				(Dictionary newFrom: { ('WormHoles' -> { {20. 2} }) }) ]
 		raise: Error
 		withErrorMessage:
-		'WormHole must have both its ends leading to valid positions inside the limits of the board!'
+		'Position of squares must be within Bounds of Board!'
 ]
 
 { #category : 'tests' }

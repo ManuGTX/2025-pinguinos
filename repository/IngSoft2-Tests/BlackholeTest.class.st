@@ -28,7 +28,7 @@ BlackholeTest >> testPlayerCantCreateBlackHoleOutsideBoard [
 				(Dictionary newFrom: { ('BlackHoles' -> { 20 }) }) ]
 		raise: Error
 		withMessageText:
-		'Position of BlackHoles must be within Bounds of Board!'
+		'Position of squares must be within Bounds of Board!'
 ]
 
 { #category : 'running' }

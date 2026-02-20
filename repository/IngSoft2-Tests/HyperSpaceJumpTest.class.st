@@ -127,5 +127,5 @@ HyperSpaceJumpTest >> testPlayerCantCreateHyperSpaceJumpOutsideBoard [
 				(Dictionary newFrom: { ('HyperSpaceJumps' -> { 20 }) }) ]
 		raise: Error
 		withMessageText:
-		'Position of HyperSpaceJumps must be within Bounds of Board!'
+		'Position of squares must be within Bounds of Board!'
 ]
