@@ -25,14 +25,18 @@ CircularBoardBuilder >> build [
 
 { #category : 'accessing' }
 CircularBoardBuilder >> createAtomicBombsAt: squarePositions [
-
+	
+	self validateSquarePositionsAreWithinBounds: squarePositions.
+	
 	squarePositions do: [ :position |
 		map at: position put: (AtomicBomb at: position) ]
 ]
 
 { #category : 'accessing' }
 CircularBoardBuilder >> createBlackHolesAt: squarePositions [
-
+	
+	self validateSquarePositionsAreWithinBounds: squarePositions.
+	
 	squarePositions do: [ :position |
 "		map at: position put: (Blackhole at: position in: self) ]"
 		map at: position put: (BlackHole x: position )]
@@ -40,7 +44,9 @@ CircularBoardBuilder >> createBlackHolesAt: squarePositions [
 
 { #category : 'accessing' }
 CircularBoardBuilder >> createCardGiversAt: squarePositions [
-
+	
+	self validateSquarePositionsAreWithinBounds: squarePositions.
+	
 	squarePositions do: [ :position |
 		map at: position put: (CardGiver at: position with: Deck new) ]
 ]
@@ -48,12 +54,16 @@ CircularBoardBuilder >> createCardGiversAt: squarePositions [
 { #category : 'accessing' }
 CircularBoardBuilder >> createEmptySquaresAt: squarePositions [
 
+	self validateSquarePositionsAreWithinBounds: squarePositions.
+
 	squarePositions do: [ :position |
 		map at: position put: (EmptySquare at: position) ]
 ]
 
 { #category : 'accessing' }
 CircularBoardBuilder >> createHyperJumpsAt: squarePositions [
+
+	self validateSquarePositionsAreWithinBounds: squarePositions.
 
 	squarePositions do: [ :position |
 		map
@@ -64,23 +74,29 @@ CircularBoardBuilder >> createHyperJumpsAt: squarePositions [
 { #category : 'accessing' }
 CircularBoardBuilder >> createHyperSpaceJumpsAt: squarePositions [
 
+	self validateSquarePositionsAreWithinBounds: squarePositions.
+
 	squarePositions do: [ :position |
 		map at: position put: (HyperSpaceJump x: position) ]
 ]
 
 { #category : 'accessing' }
-CircularBoardBuilder >> createMoonWalksAt: squarePositions [
+CircularBoardBuilder >> createMoonWalksAt: moonWalks [
 
-	squarePositions do: [ :position |
+	self validateSquarePositionsAreWithinBounds: (moonWalks collect: [ :moonWalk | moonWalk first ]).
+
+	moonWalks do: [ :position |
 		map
 			at: position first
 			put: (MoonWalk by: position second at: position first) ]
 ]
 
 { #category : 'accessing' }
-CircularBoardBuilder >> createWormHolesAt: squarePositions [
+CircularBoardBuilder >> createWormHolesAt: wormHoles [
 
-	squarePositions do: [ :position |
+	self validateSquarePositionsAreWithinBounds: (wormHoles flatCollect: [ :wormHole | wormHole ]).
+
+	wormHoles do: [ :position |
 		| wormHoleEnds |
 		wormHoleEnds := Wormhole from: position first to: position second.
 
@@ -212,4 +228,13 @@ CircularBoardBuilder >> validateProbabilityDistribution: aProbabilityDistributio
 
 	aProbabilityDistribution values sum = 100 ifFalse: [
 		Error signal: 'Probability numbers must add up to 100.' ]
+]
+
+{ #category : 'as yet unclassified' }
+CircularBoardBuilder >> validateSquarePositionsAreWithinBounds: anArrayOfSquarePositions [ 
+	anArrayOfSquarePositions do: [ :position | 
+		(position between: 1 and: boardSize) ifFalse:[Error signal: 'Position of squares must be within Bounds of Board!' ]
+		 ]
+	
+
 ]

@@ -113,6 +113,96 @@ CircularBoardBuilderTest >> testCanBuildBoardWithACustomSetOfSquarePositions [
 ]
 
 { #category : 'tests' }
+CircularBoardBuilderTest >> testCannotBuildBoardWithMoonWalksOutsideOutOfBoard [
+
+	| aBoardBuilder aSetOfSquares |
+	aSetOfSquares := OrderedDictionary new.
+	aBoardBuilder := CircularBoardBuilder new.
+	aBoardBuilder setBoardSize: 100.
+	aBoardBuilder setNumberOfRounds: 2.
+
+	aSetOfSquares at: 'MoonWalks' put: { { 101 . 4 } }.
+
+	self
+		should: [ aBoardBuilder setSquares: aSetOfSquares ]
+		raise: Error
+		withErrorMessage:
+		'Position of squares must be within Bounds of Board!'
+]
+
+{ #category : 'tests' }
+CircularBoardBuilderTest >> testCannotBuildBoardWithNegativeSquarePositions [
+
+	| aBoardBuilder aSetOfSquares |
+	aSetOfSquares := OrderedDictionary new.
+	aBoardBuilder := CircularBoardBuilder new.
+	aBoardBuilder setBoardSize: 100.
+	aBoardBuilder setNumberOfRounds: 2.
+
+	aSetOfSquares at: 'EmptySquares' put: { -1 }.
+
+	self
+		should: [ aBoardBuilder setSquares: aSetOfSquares ]
+		raise: Error
+		withErrorMessage:
+		'Position of squares must be within Bounds of Board!'
+]
+
+{ #category : 'tests' }
+CircularBoardBuilderTest >> testCannotBuildBoardWithSquarePositionsLessThan1 [
+
+	| aBoardBuilder aSetOfSquares |
+	aSetOfSquares := OrderedDictionary new.
+	aBoardBuilder := CircularBoardBuilder new.
+	aBoardBuilder setBoardSize: 100.
+	aBoardBuilder setNumberOfRounds: 2.
+
+	aSetOfSquares at: 'EmptySquares' put: { 0 }.
+
+	self
+		should: [ aBoardBuilder setSquares: aSetOfSquares ]
+		raise: Error
+		withErrorMessage:
+		'Position of squares must be within Bounds of Board!'
+]
+
+{ #category : 'tests' }
+CircularBoardBuilderTest >> testCannotBuildBoardWithSquaresOutsideOfBoardRange [
+
+	| aBoardBuilder aSetOfSquares |
+	aSetOfSquares := OrderedDictionary new.
+	aBoardBuilder := CircularBoardBuilder new.
+	aBoardBuilder setBoardSize: 100.
+	aBoardBuilder setNumberOfRounds: 2.
+
+	aSetOfSquares at: 'EmptySquares' put: { 101 }.
+
+	self
+		should: [ aBoardBuilder setSquares: aSetOfSquares ]
+		raise: Error
+		withErrorMessage:
+		'Position of squares must be within Bounds of Board!'
+]
+
+{ #category : 'tests' }
+CircularBoardBuilderTest >> testCannotBuildBoardWithWormHolesLeadingOutOfBoard [
+
+	| aBoardBuilder aSetOfSquares |
+	aSetOfSquares := OrderedDictionary new.
+	aBoardBuilder := CircularBoardBuilder new.
+	aBoardBuilder setBoardSize: 100.
+	aBoardBuilder setNumberOfRounds: 2.
+
+	aSetOfSquares at: 'WormHoles' put: { { 1 . 101 } }.
+
+	self
+		should: [ aBoardBuilder setSquares: aSetOfSquares ]
+		raise: Error
+		withErrorMessage:
+		'Position of squares must be within Bounds of Board!'
+]
+
+{ #category : 'tests' }
 CircularBoardBuilderTest >> testCannotBuildWithoutSettingBoardSize [
 
 	| aBoardBuilder |
