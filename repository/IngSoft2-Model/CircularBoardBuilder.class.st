@@ -121,6 +121,27 @@ CircularBoardBuilder >> setBoardSize: aSize [
 ]
 
 { #category : 'initialization' }
+CircularBoardBuilder >> setBoardSizeInParsecs: aParsecSize [
+
+	| sizeInCellUnits boardSizeMagnitude |
+	(aParsecSize isInteger and: [ aParsecSize > 1 ]) ifFalse: [
+		Error signal:
+			'Board Parsec size must be an integer and bigger than 1' ].
+
+	sizeInCellUnits := (Parsec of: aParsecSize) convertToCellUnits.
+	boardSizeMagnitude := (sizeInCellUnits floor) value.
+
+	boardSizeMagnitude > 1 ifFalse: [
+		Error signal: 'Board Parsec size is too small!' ].
+
+	boardSize := boardSizeMagnitude.
+
+	map := OrderedCollection new.
+
+	1 to: boardSize do: [ :x | map add: (Square x: x) ]
+]
+
+{ #category : 'initialization' }
 CircularBoardBuilder >> setNumberOfRounds: aNumberOfRounds [
 
 	(aNumberOfRounds isInteger and: [ aNumberOfRounds > 0 ]) ifFalse: [

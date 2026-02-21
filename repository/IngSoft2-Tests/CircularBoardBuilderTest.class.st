@@ -63,6 +63,20 @@ CircularBoardBuilderTest >> testAfterCreatingABoardOfSize100WithSemiRandomlyDist
 ]
 
 { #category : 'tests' }
+CircularBoardBuilderTest >> testCanBuildBoardOfSize40Parsecs [
+
+	| aBoardBuilder aBoard |
+	aBoardBuilder := CircularBoardBuilder new.
+	aBoardBuilder setNumberOfRounds: 1.
+	aBoardBuilder setBoardSizeInParsecs: 40.
+
+	aBoard := aBoardBuilder build.
+
+	self assert: aBoard size equals: 2.
+	self assert: (aBoard getSquareAt: 5) class equals: Square.
+]
+
+{ #category : 'tests' }
 CircularBoardBuilderTest >> testCanBuildBoardOfSize5 [
 
 	| aBoardBuilder aBoard |
@@ -110,6 +124,34 @@ CircularBoardBuilderTest >> testCanBuildBoardWithACustomSetOfSquarePositions [
 	self assert: (aBoard getSquareAt: 90) class equals: HyperJump.
 	self assert: (aBoard getSquareAt: 88) class equals: HyperSpaceJump.
 	self assert: (aBoard getSquareAt: 22) class equals: AtomicBomb.
+]
+
+{ #category : 'tests' }
+CircularBoardBuilderTest >> testCannotBuildBoardOfSize39Parsecs [
+
+	| aBoardBuilder  |
+	aBoardBuilder := CircularBoardBuilder new.
+	aBoardBuilder setNumberOfRounds: 1.
+	"Conversion rate is 1 Cell = 20 Parsecs, the floor of the conversion is taken, so here we'd get 1 Cell Unit of size, which is too small"
+
+	self
+		should: [ aBoardBuilder setBoardSizeInParsecs: 39 ]
+		raise: Error
+		withErrorMessage: 'Board Parsec size is too small!'
+]
+
+{ #category : 'tests' }
+CircularBoardBuilderTest >> testCannotBuildBoardOfSizeNegativeParsecs [
+
+	| aBoardBuilder  |
+	aBoardBuilder := CircularBoardBuilder new.
+	aBoardBuilder setNumberOfRounds: 1.
+	"Conversion rate is 1 Cell = 20 Parsecs, the floor of the conversion is taken, so here we'd get 1 Cell Unit of size, which is too small"
+
+	self
+		should: [ aBoardBuilder setBoardSizeInParsecs: -40 ]
+		raise: Error
+		withErrorMessage: 'Board Parsec size must be an integer and bigger than 1'
 ]
 
 { #category : 'tests' }
