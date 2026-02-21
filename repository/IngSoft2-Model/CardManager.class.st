@@ -75,6 +75,20 @@ CardManager >> getContractedShips [
 ]
 
 { #category : 'getter' }
+CardManager >> getLastRepeatableUsedCard [
+
+	| cardHistory |
+	cardHistory := self getLastUsedCards.
+	cardHistory := cardHistory select: [ :usedCard |
+		               usedCard isRepeatable ].
+
+	cardHistory ifEmpty: [
+		Error signal: 'No cards have been played yet!' ].
+
+	^ cardHistory last
+]
+
+{ #category : 'getter' }
 CardManager >> getLastUsedCards [
 	
 	^ discardPile 
