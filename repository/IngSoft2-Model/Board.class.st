@@ -74,7 +74,7 @@ Board >> initializeWithSize: aSize [
 
 	map := OrderedCollection new.
 
-	1 to: boardSize do: [ :x | map add: (Square x: x) ].
+	1 to: boardSize do: [ :x | map add: (Square at: x) ].
 	
 ]
 

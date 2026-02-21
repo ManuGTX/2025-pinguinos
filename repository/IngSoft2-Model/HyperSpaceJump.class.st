@@ -11,18 +11,7 @@ Class {
 { #category : 'action' }
 HyperSpaceJump >> applyEffectTo: aShip in: aGame [
 
-
-	| boardSize originalPosition aDestination |
-	boardSize := aGame boardSize.
-	originalPosition := aShip position.
-	aDestination := originalPosition + 4.
-
-	(aDestination > boardSize) ifTrue: [
-		aShip completeLaps: 1.
-		aDestination := aDestination - boardSize
-	].
-
-	aGame moveShip: aShip to: aDestination.
+	aGame moveAndIgnoreNewEffectsShip: aShip by: 4.
 	aShip loseShield.
 
 ]

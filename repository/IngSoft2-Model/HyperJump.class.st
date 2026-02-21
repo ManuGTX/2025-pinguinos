@@ -13,32 +13,28 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'instance creation' }
-HyperJump class >> inBoardOfSize: aBoardSize at: aPosition [
+{ #category : 'accessing' }
+HyperJump class >> at: aPosition [
 
-	^ self new initializeInBoardOfSize: aBoardSize at: aPosition
+	^ self new initializeAt: aPosition
 ]
 
 { #category : 'action' }
 HyperJump >> applyEffectTo: aShip in: aGame [
 
-	aGame move: aShip byParsecs: self parsecsToMove
+	aGame hyperJump: aShip byParsecs: self parsecsToMove
 ]
 
 { #category : 'initialization' }
-HyperJump >> initializeInBoardOfSize: aBoardSize at: position [
+HyperJump >> initializeAt: position [
 
-	| boardSizeInParsecs |
-	
 	parsecList := OrderedCollection new.
 	parsecListSize := 5.
 	currentIndex := 1.
-	
+
 	super initializeAtPosition: position.
-	boardSizeInParsecs := (CellUnit of: aBoardSize) convertToParsecs.
-	
-	1 to: parsecListSize do: [ :i |
-	parsecList add: boardSizeInParsecs / (i + 1) ]
+
+	1 to: parsecListSize do: [ :i | parsecList add: i + 1 ]
 ]
 
 { #category : 'accessing' }

@@ -82,6 +82,12 @@ CircularBoard >> size [
 	^ boardSize 
 ]
 
+{ #category : 'accessing' }
+CircularBoard >> sizeInParsecs [
+
+	^ (CellUnit of: boardSize) convertToParsecs
+]
+
 { #category : 'validation' }
 CircularBoard >> wasThisTheLastRoundFor: aShip [
 

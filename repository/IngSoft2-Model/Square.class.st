@@ -12,6 +12,14 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'accessing' }
+Square class >> at: aXPosition [
+		
+	self validateX: aXPosition.
+		
+	^self new initializeAtPosition: aXPosition.
+]
+
 { #category : 'validation' }
 Square class >> validateX: x [
 	
@@ -31,14 +39,6 @@ Square class >> validateXIsPositive: aXPosition [
 
 	aXPosition < 0 ifTrue: [
 		Error signal: 'X position must be positive.' ]
-]
-
-{ #category : 'creation' }
-Square class >> x: aXPosition [
-		
-	self validateX: aXPosition.
-		
-	^self new initializeAtPosition: aXPosition.
 ]
 
 { #category : 'action' }

@@ -10,18 +10,6 @@ Class {
 
 { #category : 'action' }
 BlackHole >> applyEffectTo: aShip in: aGame [
-
-	| boardSize originalPosition aDestination |
-	boardSize := aGame boardSize.
-	originalPosition := aShip position.
-	aDestination := originalPosition - 4.
-
-	(aDestination < 1) ifTrue: [
-		aShip completeLaps: -1.
-		aDestination := boardSize + aDestination 
-	].
-
-	aGame moveShip: aShip to: aDestination.
-
 	
+	aGame moveAndIgnoreNewEffectsShip: aShip by: -4.
 ]

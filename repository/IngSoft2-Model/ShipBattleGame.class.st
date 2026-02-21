@@ -205,6 +205,15 @@ ShipBattleGame >> haveWeGotAWinner: currentShip [
 	^ gameOver
 ]
 
+{ #category : 'game controls' }
+ShipBattleGame >> hyperJump: aShip byParsecs: parsecsToMove [
+
+	| spacesToMove |
+	
+	spacesToMove := (board sizeInParsecs / parsecsToMove) convertToCellUnits floor.
+	aShip withNoEffectsMove: spacesToMove value onCircularBoard: board
+]
+
 { #category : 'initialization' }
 ShipBattleGame >> initializeInBoard: aBoard with: aDiceSet and: aSetOfShips withDeck: aDeck [
 
@@ -235,14 +244,6 @@ ShipBattleGame >> manager [
 ]
 
 { #category : 'game controls' }
-ShipBattleGame >> move: aShip byParsecs: anAmountOfParsecs [
-
-	| spacesToMove |
-	spacesToMove := anAmountOfParsecs convertToCellUnits floor.
-	aShip withNoEffectsMove: spacesToMove value onCircularBoard: board
-]
-
-{ #category : 'game controls' }
 ShipBattleGame >> moveAllShipsBackToStart [
 
 	ships do: [ :ship | ship moveTo: (board getSquareAt: 1) ]
@@ -254,6 +255,12 @@ ShipBattleGame >> moveAllShipsBy: numberToMove exceptFor: exceptionShip [
 	ships do: [ :ship |
 		ship ~= exceptionShip ifTrue: [
 			ship moveBy: numberToMove onCircularBoard: board of: self ] ]
+]
+
+{ #category : 'game controls' }
+ShipBattleGame >> moveAndIgnoreNewEffectsShip: aShip by: aNumberToMove [
+
+	aShip withNoEffectsMove: aNumberToMove onCircularBoard: board.
 ]
 
 { #category : 'game controls' }

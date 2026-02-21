@@ -11,7 +11,7 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'instance creation' }
+{ #category : 'accessing' }
 MoonWalk class >> by: aNumberOfSquares at: aPosition [
 
 	^ self new initializeWith: aNumberOfSquares at: aPosition

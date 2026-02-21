@@ -39,7 +39,7 @@ CircularBoardBuilder >> createBlackHolesAt: squarePositions [
 	
 	squarePositions do: [ :position |
 "		map at: position put: (Blackhole at: position in: self) ]"
-		map at: position put: (BlackHole x: position )]
+		map at: position put: (BlackHole at: position )]
 ]
 
 { #category : 'accessing' }
@@ -68,7 +68,7 @@ CircularBoardBuilder >> createHyperJumpsAt: squarePositions [
 	squarePositions do: [ :position |
 		map
 			at: position
-			put: (HyperJump inBoardOfSize: boardSize at: position) ]
+			put: (HyperJump at: position) ]
 ]
 
 { #category : 'accessing' }
@@ -77,7 +77,7 @@ CircularBoardBuilder >> createHyperSpaceJumpsAt: squarePositions [
 	self validateSquarePositionsAreWithinBounds: squarePositions.
 
 	squarePositions do: [ :position |
-		map at: position put: (HyperSpaceJump x: position) ]
+		map at: position put: (HyperSpaceJump at: position) ]
 ]
 
 { #category : 'accessing' }
@@ -115,7 +115,7 @@ CircularBoardBuilder >> setBoardSize: aSize [
 	
 	map := OrderedCollection new.
 
-	1 to: boardSize do: [ :x | map add: (Square x: x) ].
+	1 to: boardSize do: [ :x | map add: (Square at: x) ].
 	
 
 ]
@@ -138,7 +138,7 @@ CircularBoardBuilder >> setBoardSizeInParsecs: aParsecSize [
 
 	map := OrderedCollection new.
 
-	1 to: boardSize do: [ :x | map add: (Square x: x) ]
+	1 to: boardSize do: [ :x | map add: (Square at: x) ]
 ]
 
 { #category : 'initialization' }
