@@ -98,12 +98,6 @@ Dimension >> floor [
 ]
 
 { #category : 'initialization' }
-Dimension >> initialize [
-
-	Dimension setRates. "Me aseguro que siempre funcione aun cuando no se llame esto"
-]
-
-{ #category : 'initialization' }
 Dimension >> initializeWith: aValue [
 
 	value := aValue.

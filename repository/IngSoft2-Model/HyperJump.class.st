@@ -26,19 +26,13 @@ HyperJump >> applyEffectTo: aShip in: aGame [
 ]
 
 { #category : 'initialization' }
-HyperJump >> initialize [
-
-	super initialize.
-
-	parsecList := OrderedCollection new.
-	parsecListSize := 5.
-	currentIndex := 1
-]
-
-{ #category : 'initialization' }
 HyperJump >> initializeInBoardOfSize: aBoardSize at: position [
 
 	| boardSizeInParsecs |
+	
+	parsecList := OrderedCollection new.
+	parsecListSize := 5.
+	currentIndex := 1.
 	
 	super initializeAtPosition: position.
 	boardSizeInParsecs := (CellUnit of: aBoardSize) convertToParsecs.

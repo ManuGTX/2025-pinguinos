@@ -19,13 +19,21 @@ Class {
 { #category : 'creation' }
 CardManager class >> ships: aSetOfShips board: aBoard deck: aDeck [
 
-	^ self new initializeWithShips: aSetOfShips withBoard: aBoard withDeck: aDeck
+	^ self new
+		  initializeWithShips: aSetOfShips
+		  withBoard: aBoard
+		  withDeck: aDeck
+		  inGame: nil
 ]
 
 { #category : 'creation' }
 CardManager class >> ships: aSetOfShips board: aBoard deck: aDeck game: aGame [
 
-	^ self new initializeWithShips: aSetOfShips withBoard: aBoard withDeck: aDeck inGame: aGame
+	^ self new
+		  initializeWithShips: aSetOfShips
+		  withBoard: aBoard
+		  withDeck: aDeck
+		  inGame: aGame
 ]
 
 { #category : 'adding' }
@@ -93,17 +101,6 @@ CardManager >> getLastUsedCards [
 	
 	^ discardPile 
 	
-]
-
-{ #category : 'initialization' }
-CardManager >> initializeWithShips: aSetOfShips withBoard: aBoard withDeck: aDeck [
-
-	activeCardEffects := OrderedCollection new.
-	deck := aDeck.
-	ships := aSetOfShips.
-	board := aBoard.
-	discardPile := OrderedCollection new.
-	^ self
 ]
 
 { #category : 'initialization' }

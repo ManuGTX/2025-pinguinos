@@ -53,21 +53,14 @@ Ship >> hasAny: aCard [
 ]
 
 { #category : 'initialization' }
-Ship >> initialize [
-
-	super initialize.
+Ship >> initializeName: aName [
+	
 	position := 1.
 	laps := 1.
 	shields := 3.
 	turnsToSkip := 0.
 	cards := OrderedCollection new.
 	
-
-]
-
-{ #category : 'initialization' }
-Ship >> initializeName: aName [
-
 	shipName := aName
 ]
 

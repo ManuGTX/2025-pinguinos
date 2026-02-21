@@ -39,7 +39,7 @@ NullCardManager >> getLastUsedCards [
 ]
 
 { #category : 'initialization' }
-NullCardManager >> initializeWithShips: aSetOfShips withBoard: aBoard withDeck: aDeck [
+NullCardManager >> initializeWithShips: aSetOfShips withBoard: aBoard withDeck: aDeck inGame: aGame [
 
 	^ self
 ]

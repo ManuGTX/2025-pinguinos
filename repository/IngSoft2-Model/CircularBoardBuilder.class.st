@@ -207,7 +207,7 @@ CircularBoardBuilder >> setSquares: aDictionaryOfSquares [
 		(aDictionaryOfSquares at: 'CardGivers' ifAbsent: [ {  } ])
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'validating' }
 CircularBoardBuilder >> validateBoard [
 
 	boardSize ifNil: [
@@ -219,7 +219,7 @@ CircularBoardBuilder >> validateBoard [
 			'You must define a number of rounds to be played with setNumberOfRounds before being able to build a board.' ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'validating' }
 CircularBoardBuilder >> validateProbabilityDistribution: aProbabilityDistribution [
 
 	aProbabilityDistribution valuesDo: [ :probability |
@@ -230,7 +230,7 @@ CircularBoardBuilder >> validateProbabilityDistribution: aProbabilityDistributio
 		Error signal: 'Probability numbers must add up to 100.' ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'validating' }
 CircularBoardBuilder >> validateSquarePositionsAreWithinBounds: anArrayOfSquarePositions [ 
 	anArrayOfSquarePositions do: [ :position | 
 		(position between: 1 and: boardSize) ifFalse:[Error signal: 'Position of squares must be within Bounds of Board!' ]

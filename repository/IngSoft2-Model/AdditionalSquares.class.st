@@ -16,13 +16,17 @@ Class {
 { #category : 'creation' }
 AdditionalSquares class >> of: aNumber to: aTargetShip usedBy: aCard [
 
-	^ self new initializeOf: aNumber with: aTargetShip usedBy: aCard
+	^ self new initializeOf: aNumber with: aTargetShip usedBy: aCard toAll: false
 ]
 
 { #category : 'creation' }
 AdditionalSquares class >> of: aNumber toAnyUsedBy: aCard [
 
-	^ self new initializeOf: aNumber toAnyUsedBy: aCard
+	^ self new
+		  initializeOf: aNumber
+		  with: NullShip new
+		  usedBy: aCard
+		  toAll: true
 ]
 
 { #category : 'one more square' }
@@ -34,20 +38,10 @@ AdditionalSquares >> addMovement: aShip [
 ]
 
 { #category : 'initialization' }
-AdditionalSquares >> initializeOf: aNumber toAnyUsedBy: aCard [
+AdditionalSquares >> initializeOf: aNumber with: aTargetShip usedBy: aCard toAll: aBoolean [
 	
 	numberOfSquares := aNumber.
-	applyToEveryone := true.
-	targetShip := NullShip new.
-	usedBy := aCard.
-	^ self
-]
-
-{ #category : 'initialization' }
-AdditionalSquares >> initializeOf: aNumber with: aTargetShip usedBy: aCard [
-	
-	numberOfSquares := aNumber.
-	applyToEveryone := false.
+	applyToEveryone := aBoolean.
 	targetShip := aTargetShip.
 	usedBy := aCard.
 	^ self

@@ -23,7 +23,7 @@ ShipTest >> testWhenAShipIsCreatedThenIsPositionedIn1 [
 	
 	aBoard := Board withSize: 5.
 
-	aShip := Ship new.
+	aShip := Ship named: 'Jorge'.
 
 	self assert: aShip position equals: 1
 ]

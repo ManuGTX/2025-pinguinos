@@ -48,7 +48,7 @@ DieTest >> test6SidedDieCanOnlyRollValuesBetween1And6 [
 	| a6SidedDie resultsOf50Rolls |
 	
 	resultsOf50Rolls := OrderedCollection new.
-	a6SidedDie := Die new.
+	a6SidedDie := Die withSides: 6.
 	
 	50 timesRepeat: [ resultsOf50Rolls add: a6SidedDie roll ].
 
@@ -60,7 +60,7 @@ DieTest >> test6SidedDieCanOnlyRollValuesBetween1And6 [
 DieTest >> testAfterRollingA6SidedDie1000TimesTheDistributionOfResultingNumbersIsUniform [
 
 	| aDie resultsOf1000Rolls partialResult |
-	aDie := Die new.
+	aDie := Die withSides: 6.
 	resultsOf1000Rolls := Dictionary new.
 
 	1000 timesRepeat: [
