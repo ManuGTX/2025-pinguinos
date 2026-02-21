@@ -22,13 +22,9 @@ RedoCard >> isTurnRestricted [
 
 { #category : 'action handling' }
 RedoCard >> managedBy: aCardManager from: anActivatorShip target: aTarget [
-	
-	| cardHistory |
-	
-	cardHistory := aCardManager getLastUsedCards.
-	cardHistory := cardHistory select: [ :usedCard | usedCard isRepeatable ].
-	
-	cardHistory ifEmpty: [ Error signal: 'No cards have been played yet, this card cannot be used!' ].
-	
-	(cardHistory last) managedBy: aCardManager from: anActivatorShip target: aTarget.
+
+	aCardManager getLastRepeatableUsedCard
+		managedBy: aCardManager
+		from: anActivatorShip
+		target: aTarget
 ]
