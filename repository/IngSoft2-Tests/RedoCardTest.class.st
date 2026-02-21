@@ -409,7 +409,7 @@ RedoCardTest >> testRedoCardCantBeUsedWhenNoCardsHaveBeenPlayed [
 		should: [ aGame playCard: aCard by: jorgeShip ]
 		raise: Error
 		withErrorMessage:
-		'No cards have been played yet, this card cannot be used!'.
+		'No cards have been played yet!'.
 
 	self assert: (aGame cardsOf: jorgeShip) size equals: 2
 ]

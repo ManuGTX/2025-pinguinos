@@ -23,13 +23,13 @@ Dimension class >> checkSignOfValue: value [
 { #category : 'instance creation' }
 Dimension class >> conversionRateFrom: aUnit to: anotherUnit [
 
-	 ^ (conversionRates at: aUnit) at: anotherUnit 
-	
+	^ (self conversionRates at: aUnit) at: anotherUnit
 ]
 
 { #category : 'instance creation' }
 Dimension class >> conversionRates [
-
+	
+	conversionRates ifNil: [ self setRates ].
 	 ^ conversionRates 
 	
 ]
@@ -95,12 +95,6 @@ Dimension >> convertToParsecs [
 Dimension >> floor [
 
 	^ (self class of: (self value floor))
-]
-
-{ #category : 'initialization' }
-Dimension >> initialize [
-
-	Dimension setRates. "Me aseguro que siempre funcione aun cuando no se llame esto"
 ]
 
 { #category : 'initialization' }

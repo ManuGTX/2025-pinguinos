@@ -14,6 +14,33 @@ HyperSpaceJumpTest >> should: anErrorBlock raise: anErrorClass withMessageText: 
 		withExceptionDo: [ :error | self assert: error messageText equals: errorMessage ]
 ]
 
+{ #category : 'tests' }
+HyperSpaceJumpTest >> testHyperSpaceJumpAtPosition2ThenPlayerGetsSentToPosition4AndLoses1Shield [ 
+
+	| aGame expectedResult jorgeShip |
+	
+	jorgeShip := Ship named: 'Jorge'.
+
+	aGame := ShipBattleGame
+		         inSize: 6
+		         rounds: 2
+		         with: { (LoadedDie withSides: 1) }
+		         and: { jorgeShip }
+		         withSpecialSquaresAt:
+		         (Dictionary newFrom: { ('HyperSpaceJumps' -> { 2 }) }).
+
+	aGame nextTurn. "Jorge mueve hasta 2"
+
+	expectedResult := OrderedDictionary new.
+	expectedResult at: '1°' put: (Dictionary newFrom: {
+				 ('name' -> 'Jorge').
+				 ('position' -> 6).
+				 ('lap' -> 1)}).
+
+	self assert: aGame boardState equals: expectedResult.
+	self assert: jorgeShip remainingShields equals: 2
+]
+
 { #category : 'running' }
 HyperSpaceJumpTest >> testHyperSpaceJumpAtPosition2ThenPlayerGetsSentToPosition4ThenLandsOnAnotherHyperSpaceJumpAndDoesntMoveAndLoses1ShieldOnly [
 
@@ -127,5 +154,5 @@ HyperSpaceJumpTest >> testPlayerCantCreateHyperSpaceJumpOutsideBoard [
 				(Dictionary newFrom: { ('HyperSpaceJumps' -> { 20 }) }) ]
 		raise: Error
 		withMessageText:
-		'Position of HyperSpaceJumps must be within Bounds of Board!'
+		'Position of squares must be within Bounds of Board!'
 ]

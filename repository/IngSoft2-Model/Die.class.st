@@ -32,13 +32,6 @@ Die class >> withSides: numberOfSides [
 ]
 
 { #category : 'initialization' }
-Die >> initialize [
-	
-	super initialize. 
-	self initializeWith: 6
-]
-
-{ #category : 'initialization' }
 Die >> initializeWith: numberOfSides [
 
 	sideNumber := numberOfSides.

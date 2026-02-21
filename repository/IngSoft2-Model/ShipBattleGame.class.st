@@ -14,34 +14,70 @@ Class {
 { #category : 'instance creation' }
 ShipBattleGame class >> inSize: aSize rounds: aRoundNumber with: aDiceSet and: aSetOfShips [
 
+	| aBoardBuilder probabilityDistribution aNullDeck |
+	
+	aNullDeck := NullDeck new.
+	probabilityDistribution := Dictionary new.
+
+	probabilityDistribution at: 'EmptySquare' put: 30.
+	probabilityDistribution at: 'BlackHole' put: 20.
+	probabilityDistribution at: 'HyperSpaceJump' put: 20.
+	probabilityDistribution at: 'MoonWalk' put: 10.
+	probabilityDistribution at: 'HyperJump' put: 8.
+	probabilityDistribution at: 'AtomicBomb' put: 2.
+	probabilityDistribution at: 'CardGiver' put: 10.
+	
+	aBoardBuilder := CircularBoardBuilder new.
+	
+	aBoardBuilder setNumberOfRounds: aRoundNumber.
+	aBoardBuilder setBoardSize: aSize.
+	aBoardBuilder setSquareProbabilities: probabilityDistribution.
+	aBoardBuilder setDeck: aNullDeck.
+	
 	^ self new
-		  initializeInSize: aSize
-		  rounds: aRoundNumber
+		  initializeInBoard: aBoardBuilder build
 		  with: aDiceSet
 		  and: aSetOfShips
+		  withDeck: aNullDeck
 ]
 
 { #category : 'instance creation' }
 ShipBattleGame class >> inSize: aSize rounds: aRoundNumber with: aDiceSet and: aSetOfShips withSpecialSquaresAt: squarePositions [
 
+	| aBoardBuilder aNullDeck |
+	
+	aBoardBuilder := CircularBoardBuilder new.
+	aNullDeck := NullDeck new.
+	
+	aBoardBuilder setNumberOfRounds: aRoundNumber.
+	aBoardBuilder setBoardSize: aSize.
+	aBoardBuilder setDeck: aNullDeck.
+	aBoardBuilder setSquares: squarePositions.
+	
 	^ self new
-		  initializeInSize: aSize
-		  rounds: aRoundNumber
+		  initializeInBoard: aBoardBuilder build
 		  with: aDiceSet
 		  and: aSetOfShips
-		  withSpecialSquaresAt: squarePositions
+		  withDeck: aNullDeck
 ]
 
 { #category : 'accessing' }
 ShipBattleGame class >> inSize: aSize rounds: aRoundNumber with: aDiceSet and: aSetOfShips withSpecialSquaresAt: squarePositions withDeck: aDeck [
 
+	| aBoardBuilder |
+	
+	aBoardBuilder := CircularBoardBuilder new.
+	
+	aBoardBuilder setNumberOfRounds: aRoundNumber.
+	aBoardBuilder setBoardSize: aSize.
+	aBoardBuilder setDeck: aDeck.
+	aBoardBuilder setSquares: squarePositions.
+	
 	^ self new
-		  initializeInSize: aSize
-		  rounds: aRoundNumber
+		  initializeInBoard: aBoardBuilder build
 		  with: aDiceSet
 		  and: aSetOfShips
-		  withSpecialSquaresAt: squarePositions
-		  withDeck: aDeck.
+		  withDeck: aDeck 
 ]
 
 { #category : 'accessing' }
@@ -174,85 +210,42 @@ ShipBattleGame >> haveWeGotAWinner: currentShip [
 	^ gameOver
 ]
 
-{ #category : 'initialization' }
-ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet and: aSetOfShips [
+{ #category : 'game controls' }
+ShipBattleGame >> hyperJump: aShip byParsecs: parsecsToMove [
 
-	board := CircularBoard
-		         withRandomSpecialSquaresAndSize: aSize
-		         rounds: aRoundNumber.
-
-	diceSet := DiceSet withDice: aDiceSet.
-
-	ships := self orderShips: aSetOfShips.
+	| spacesToMove |
 	
-	cardManager := NullCardManager 
-		               ships: ships
-		               board: board
-		               deck: nil.
-
-	shipToMove := 1.
-	gameOver := false.
-	gameWinner := nil.
+	spacesToMove := (board sizeInParsecs / parsecsToMove) convertToCellUnits floor.
+	aShip withNoEffectsMove: spacesToMove value onCircularBoard: board
 ]
 
 { #category : 'initialization' }
-ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet and: aSetOfShips withSpecialSquaresAt: squarePositions [
+ShipBattleGame >> initializeInBoard: aBoard with: aDiceSet and: aSetOfShips withDeck: aDeck [
 
-	board := CircularBoard
-		         withSize: aSize
-		         rounds: aRoundNumber
-		         withSpecialSquaresAt: squarePositions.
-
+	board := aBoard.
 	diceSet := DiceSet withDice: aDiceSet.
-
-	ships := self orderShips: aSetOfShips.
 	
-	cardManager := NullCardManager 
-		               ships: ships
-		               board: board
-		               deck: nil.
-
-	shipToMove := 1.
-	gameOver := false.
-	gameWinner := nil.
-]
-
-{ #category : 'initialization' }
-ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet and: aSetOfShips withSpecialSquaresAt: squarePositions withDeck: aDeck [
-
-	board := CircularBoard
-		         withSize: aSize
-		         rounds: aRoundNumber
-		         withSpecialSquaresAt: squarePositions.
-
-	diceSet := DiceSet withDice: aDiceSet.
-
-	ships :=  aSetOfShips collect: [ :ship | ship addCards: (OrderedCollection 
-																					with: aDeck drawCard 
-																					with: aDeck drawCard) ].
+	ships := self orderShips: aSetOfShips.
+	ships := aSetOfShips collect: [ :ship |
+			         ship addCards:
+				         (OrderedCollection
+					          with: aDeck drawCard
+					          with: aDeck drawCard) ].
 
 	cardManager := CardManager
 		               ships: ships
 		               board: board
 		               deck: aDeck
-							game: self.
+		               game: self.
 
 	shipToMove := 1.
 	gameOver := false.
-	gameWinner := nil.
+	gameWinner := nil
 ]
 
 { #category : 'accessing' }
 ShipBattleGame >> manager [
 	^ cardManager 
-]
-
-{ #category : 'game controls' }
-ShipBattleGame >> move: aShip byParsecs: anAmountOfParsecs [
-
-	| spacesToMove |
-	spacesToMove := anAmountOfParsecs convertToCellUnits floor.
-	aShip withNoEffectsMove: spacesToMove value onCircularBoard: board
 ]
 
 { #category : 'game controls' }
@@ -267,6 +260,12 @@ ShipBattleGame >> moveAllShipsBy: numberToMove exceptFor: exceptionShip [
 	ships do: [ :ship |
 		ship ~= exceptionShip ifTrue: [
 			ship moveBy: numberToMove onCircularBoard: board of: self ] ]
+]
+
+{ #category : 'game controls' }
+ShipBattleGame >> moveAndIgnoreNewEffectsShip: aShip by: aNumberToMove [
+
+	aShip withNoEffectsMove: aNumberToMove onCircularBoard: board.
 ]
 
 { #category : 'game controls' }

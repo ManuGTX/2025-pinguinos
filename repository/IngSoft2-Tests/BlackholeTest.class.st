@@ -1,12 +1,12 @@
 Class {
-	#name : 'BlackholeTest',
+	#name : 'BlackHoleTest',
 	#superclass : 'TestCase',
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
 
 { #category : 'asserting' }
-BlackholeTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+BlackHoleTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
 
 	self
 		should: anErrorBlock
@@ -15,7 +15,7 @@ BlackholeTest >> should: anErrorBlock raise: anErrorClass withMessageText: error
 ]
 
 { #category : 'tests' }
-BlackholeTest >> testPlayerCantCreateBlackHoleOutsideBoard [
+BlackHoleTest >> testPlayerCantCreateBlackHoleOutsideBoard [
 
 	self
 		should: [
@@ -28,11 +28,11 @@ BlackholeTest >> testPlayerCantCreateBlackHoleOutsideBoard [
 				(Dictionary newFrom: { ('BlackHoles' -> { 20 }) }) ]
 		raise: Error
 		withMessageText:
-		'Position of BlackHoles must be within Bounds of Board!'
+		'Position of squares must be within Bounds of Board!'
 ]
 
 { #category : 'running' }
-BlackholeTest >> testWhenBlackholeAtPosition2ThenPlayerGetsSentToPosition4AndLoses1Lap [
+BlackHoleTest >> testWhenBlackholeAtPosition2ThenPlayerGetsSentToPosition4AndLoses1Lap [
 
 	| aGame expectedResult |
 	
@@ -56,7 +56,7 @@ BlackholeTest >> testWhenBlackholeAtPosition2ThenPlayerGetsSentToPosition4AndLos
 ]
 
 { #category : 'running' }
-BlackholeTest >> testWhenBlackholeAtPosition2ThenPlayerGetsSentToPosition4ThenLandsOnAnotherBlackholeAndDoesntMove [
+BlackHoleTest >> testWhenBlackholeAtPosition2ThenPlayerGetsSentToPosition4ThenLandsOnAnotherBlackholeAndDoesntMove [
 
 	| aGame expectedResult |
 	

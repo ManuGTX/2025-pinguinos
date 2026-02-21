@@ -24,5 +24,5 @@ AccelerationCard >> isTurnRestricted [
 AccelerationCard >> managedBy: aCardManager from: anActivatorShip target: aTargetShip [
 
 	aCardManager addEffect:
-		(OneMoreSquare toAnyUsedBy: self)
+		(AdditionalSquaresForAll of: 1 usedBy: self)
 ]

@@ -28,7 +28,7 @@ AtomicBombTest >> testPlayerCantCreateAtomicBombOutsideBoard [
 				(Dictionary newFrom: { ('AtomicBombs' -> { 20 }) }) ]
 		raise: Error
 		withMessageText:
-		'Position of AtomicBombs must be within Bounds of Board!'
+		'Position of squares must be within Bounds of Board!'
 ]
 
 { #category : 'running' }

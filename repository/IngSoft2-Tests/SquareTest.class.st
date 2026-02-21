@@ -20,7 +20,7 @@ SquareTest >> should: anErrorBlock raise: anErrorClass withErrorMessage: aMessag
 SquareTest >> testWhenXIsNegativeThenCreationFails [
 
 	self
-		should: [ Square x: -8 ]
+		should: [ Square at: -8 ]
 		raise:  Error
 		withErrorMessage: 'X position must be positive.'
 ]
@@ -29,7 +29,7 @@ SquareTest >> testWhenXIsNegativeThenCreationFails [
 SquareTest >> testWhenXIsNotAnIntegerThenCreationFails [
 
 	self
-		should: [ Square x: 0.4 ]
+		should: [ Square at: 0.4 ]
 		raise:  Error
 		withErrorMessage: 'X position must be an integer.'
 ]

@@ -69,7 +69,7 @@ MoonWalkTest >> testPlayerCantCreateMoonWalkOutsideBoard [
 				(Dictionary newFrom: { ('MoonWalks' -> { {20. 3} }) }) ]
 		raise: Error
 		withMessageText:
-		'Position of MoonWalks must be within Bounds of Board!'
+		'Position of squares must be within Bounds of Board!'
 ]
 
 { #category : 'running' }

@@ -19,13 +19,21 @@ Class {
 { #category : 'creation' }
 CardManager class >> ships: aSetOfShips board: aBoard deck: aDeck [
 
-	^ self new initializeWithShips: aSetOfShips withBoard: aBoard withDeck: aDeck
+	^ self new
+		  initializeWithShips: aSetOfShips
+		  withBoard: aBoard
+		  withDeck: aDeck
+		  inGame: nil
 ]
 
 { #category : 'creation' }
 CardManager class >> ships: aSetOfShips board: aBoard deck: aDeck game: aGame [
 
-	^ self new initializeWithShips: aSetOfShips withBoard: aBoard withDeck: aDeck inGame: aGame
+	^ self new
+		  initializeWithShips: aSetOfShips
+		  withBoard: aBoard
+		  withDeck: aDeck
+		  inGame: aGame
 ]
 
 { #category : 'adding' }
@@ -75,21 +83,24 @@ CardManager >> getContractedShips [
 ]
 
 { #category : 'getter' }
+CardManager >> getLastRepeatableUsedCard [
+
+	| cardHistory |
+	cardHistory := self getLastUsedCards.
+	cardHistory := cardHistory select: [ :usedCard |
+		               usedCard isRepeatable ].
+
+	cardHistory ifEmpty: [
+		Error signal: 'No cards have been played yet!' ].
+
+	^ cardHistory last
+]
+
+{ #category : 'getter' }
 CardManager >> getLastUsedCards [
 	
 	^ discardPile 
 	
-]
-
-{ #category : 'initialization' }
-CardManager >> initializeWithShips: aSetOfShips withBoard: aBoard withDeck: aDeck [
-
-	activeCardEffects := OrderedCollection new.
-	deck := aDeck.
-	ships := aSetOfShips.
-	board := aBoard.
-	discardPile := OrderedCollection new.
-	^ self
 ]
 
 { #category : 'initialization' }
@@ -127,4 +138,13 @@ CardManager >> removeEffectOf: aCard [
 		Error signal:
 			'The selected card is not active at the moment, so it cannot be removed!' ].
 	activeCardEffects := filteredEffectList
+]
+
+{ #category : 'validation' }
+CardManager >> validateContractBetween: aContractorShip and: aContractedShip [
+	
+	aContractorShip = aContractedShip ifTrue: [ Error signal: 'A ship cannot contract itself as a mercenary!' ].
+	
+	(self getContractedShips includes: aContractedShip) ifTrue: [
+		Error signal: 'A ship cannot contract as mercenary a ship that has already been contracted by someone else!' ].
 ]

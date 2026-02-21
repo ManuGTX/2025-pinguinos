@@ -285,7 +285,7 @@ ShipBattleGameTest >> testWhenCreatingGameWith0RoundsAnErrorIsRaised [
 				and: { (Ship named: 'player 1') }
 				withSpecialSquaresAt: Dictionary new ]
 		raise: Error
-		withErrorMessage: 'Round number for the board must be positive.'
+		withErrorMessage: 'Round number for the board must be positive and an integer.'
 ]
 
 { #category : 'running' }
@@ -300,7 +300,7 @@ ShipBattleGameTest >> testWhenCreatingGameWithCircularBoardOfSize0AnErrorIsRaise
 				and: { (Ship named: 'player 1') }
 				withSpecialSquaresAt: Dictionary new ]
 		raise: Error
-		withErrorMessage: 'Size for the grid must be positive.'
+		withErrorMessage: 'Board size must be an integer and bigger than 1'
 ]
 
 { #category : 'running' }
@@ -315,7 +315,7 @@ ShipBattleGameTest >> testWhenCreatingGameWithCircularBoardOfSizeNegativeAnError
 				and: { (Ship named: 'player 1') }
 				withSpecialSquaresAt: Dictionary new ]
 		raise: Error
-		withErrorMessage: 'Size for the grid must be positive.'
+		withErrorMessage: 'Board size must be an integer and bigger than 1'
 ]
 
 { #category : 'running' }
@@ -330,7 +330,7 @@ ShipBattleGameTest >> testWhenCreatingGameWithNegativeRoundsAnErrorIsRaised [
 				and: { (Ship named: 'player 1') }
 				withSpecialSquaresAt: Dictionary new ]
 		raise: Error
-		withErrorMessage: 'Round number for the board must be positive.'
+		withErrorMessage: 'Round number for the board must be positive and an integer.'
 ]
 
 { #category : 'running' }

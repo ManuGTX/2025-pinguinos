@@ -134,7 +134,7 @@ MercenaryCardTest >> testShipCannotContractAShipThatHasAlreadyBeenContracted [
 	
 	aDeck := aGame cardsOf: joseShip.
 	aCard := aDeck first.
-
+	
 	self
 		should: [ aGame playCard: aCard by: joseShip target: julianShip ]
 		raise: Error

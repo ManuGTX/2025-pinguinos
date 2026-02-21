@@ -18,7 +18,7 @@ Wormhole class >> areEndsDistinct: wormHoleOrigin and: wormHoleEnd [
 		Error signal: 'Wormhole cannot lead to itself!' ]
 ]
 
-{ #category : 'instance creation' }
+{ #category : 'accessing' }
 Wormhole class >> from: anOriginPosition to: aDestiny [
 
 	self areEndsDistinct: anOriginPosition and: aDestiny.
