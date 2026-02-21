@@ -24,5 +24,5 @@ SpeedCard >> isTurnRestricted [
 SpeedCard >> managedBy: aCardManager from: anActivatorShip target: aTargetShip [
 
 	aCardManager addEffect:
-		(OneMoreSquare to: aTargetShip usedBy: self)
+		(AdditionalSquares of: 1 to: aTargetShip usedBy: self)
 ]
