@@ -20,9 +20,8 @@ Class {
 Game class >> inSize: aSize withWormHoleFrom: aSquare to: anotherSquare with: aDiceSet and: aSetOfShips [
 
 	^ self new
-		  initializeInSize: aSize
-		  withWormholeFrom: aSquare
-		  to: anotherSquare
+		  initializeIn:
+		  (Board withSize: aSize withWormHoleFrom: aSquare to: anotherSquare)
 		  with: aDiceSet
 		  and: aSetOfShips
 ]
@@ -70,32 +69,13 @@ Game >> haveWeGotAWinner: currentShip [
 { #category : 'initialization' }
 Game >> initializeIn: aBoard with: aDiceSet and: aSetOfShips [
 
-	board ifNil: [ 
+	aBoard ifNil: [ 
 		Error signal: 'Cannot build a game without a board!' ].
-	ships ifEmpty: [
-		Error signal: 'Cannot build a game without any ships!' ].
-	diceSet ifNil: [
+	aDiceSet ifNil: [
 		Error signal: 'Cannot build a game without any dice!' ].
 
 	board := aBoard.
 	diceSet := DiceSet withDice: aDiceSet.
-	ships := aSetOfShips.
-
-	shipToMove := 1.
-	gameOver := false.
-	gameWinner := nil
-]
-
-{ #category : 'initialization' }
-Game >> initializeInSize: aSize withWormholeFrom: aSquare to: anotherSquare with: aDiceSet and: aSetOfShips [
-
-	board := Board
-		         withSize: aSize
-		         withWormHoleFrom: aSquare
-		         to: anotherSquare.
-
-	diceSet := DiceSet withDice: aDiceSet.
-
 	ships := self orderShips: aSetOfShips.
 
 	shipToMove := 1.
