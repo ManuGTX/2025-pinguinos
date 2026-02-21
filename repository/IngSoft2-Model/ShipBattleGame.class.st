@@ -14,8 +14,9 @@ Class {
 { #category : 'instance creation' }
 ShipBattleGame class >> inSize: aSize rounds: aRoundNumber with: aDiceSet and: aSetOfShips [
 
-	| aBoardBuilder probabilityDistribution |
+	| aBoardBuilder probabilityDistribution aNullDeck |
 	
+	aNullDeck := NullDeck new.
 	probabilityDistribution := Dictionary new.
 
 	probabilityDistribution at: 'EmptySquare' put: 30.
@@ -31,30 +32,33 @@ ShipBattleGame class >> inSize: aSize rounds: aRoundNumber with: aDiceSet and: a
 	aBoardBuilder setNumberOfRounds: aRoundNumber.
 	aBoardBuilder setBoardSize: aSize.
 	aBoardBuilder setSquareProbabilities: probabilityDistribution.
+	aBoardBuilder setDeck: aNullDeck.
 	
 	^ self new
 		  initializeInBoard: aBoardBuilder build
 		  with: aDiceSet
 		  and: aSetOfShips
-		  withDeck: NullDeck new
+		  withDeck: aNullDeck
 ]
 
 { #category : 'instance creation' }
 ShipBattleGame class >> inSize: aSize rounds: aRoundNumber with: aDiceSet and: aSetOfShips withSpecialSquaresAt: squarePositions [
 
-	| aBoardBuilder |
+	| aBoardBuilder aNullDeck |
 	
 	aBoardBuilder := CircularBoardBuilder new.
+	aNullDeck := NullDeck new.
 	
 	aBoardBuilder setNumberOfRounds: aRoundNumber.
 	aBoardBuilder setBoardSize: aSize.
+	aBoardBuilder setDeck: aNullDeck.
 	aBoardBuilder setSquares: squarePositions.
 	
 	^ self new
 		  initializeInBoard: aBoardBuilder build
 		  with: aDiceSet
 		  and: aSetOfShips
-		  withDeck: NullDeck new
+		  withDeck: aNullDeck
 ]
 
 { #category : 'accessing' }
@@ -66,6 +70,7 @@ ShipBattleGame class >> inSize: aSize rounds: aRoundNumber with: aDiceSet and: a
 	
 	aBoardBuilder setNumberOfRounds: aRoundNumber.
 	aBoardBuilder setBoardSize: aSize.
+	aBoardBuilder setDeck: aDeck.
 	aBoardBuilder setSquares: squarePositions.
 	
 	^ self new

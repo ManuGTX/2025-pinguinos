@@ -9,7 +9,8 @@ Class {
 		'map',
 		'boardSize',
 		'rounds',
-		'probabilityRanges'
+		'probabilityRanges',
+		'cardDeck'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -46,9 +47,12 @@ CircularBoardBuilder >> createBlackHolesAt: squarePositions [
 CircularBoardBuilder >> createCardGiversAt: squarePositions [
 	
 	self validateSquarePositionsAreWithinBounds: squarePositions.
+	cardDeck ifNil: [
+		Error signal:
+			'You must set a deck of cards first to be able to add Card Givers to the map!' ].
 	
 	squarePositions do: [ :position |
-		map at: position put: (CardGiver at: position with: Deck new) ]
+		map at: position put: (CardGiver at: position with: cardDeck) ]
 ]
 
 { #category : 'accessing' }
@@ -139,6 +143,11 @@ CircularBoardBuilder >> setBoardSizeInParsecs: aParsecSize [
 	map := OrderedCollection new.
 
 	1 to: boardSize do: [ :x | map add: (Square at: x) ]
+]
+
+{ #category : 'initialization' }
+CircularBoardBuilder >> setDeck: aDeck [
+	cardDeck := aDeck.
 ]
 
 { #category : 'initialization' }

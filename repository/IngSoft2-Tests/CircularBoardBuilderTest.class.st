@@ -36,6 +36,7 @@ CircularBoardBuilderTest >> testAfterCreatingABoardOfSize100WithSemiRandomlyDist
 	aBoardBuilder setBoardSize: 100.
 	aBoardBuilder setNumberOfRounds: 2.
 	aBoardBuilder setSquareProbabilities: probabilityDistribution.
+	aBoardBuilder setDeck: NullDeck new.
 
 	"dict['nombre clase'] = { numero de ocurrencias }"
 	classCounts at: 'EmptySquare' put: 0.
@@ -47,7 +48,7 @@ CircularBoardBuilderTest >> testAfterCreatingABoardOfSize100WithSemiRandomlyDist
 	classCounts at: 'CardGiver' put: 0.
 
 	boards := OrderedCollection new.
-
+	
 	numberOfBoards timesRepeat: [ boards add: aBoardBuilder build ].
 
 	boards do: [ :board |
@@ -108,6 +109,7 @@ CircularBoardBuilderTest >> testCanBuildBoardWithACustomSetOfSquarePositions [
 	aSetOfSquares at: 'HyperSpaceJumps' put: { 88 }.
 	aSetOfSquares at: 'AtomicBombs' put: { 22 }.
 	
+	aBoardBuilder setDeck: NullDeck new.
 	aBoardBuilder setSquares: aSetOfSquares.
 	
 	aBoard := aBoardBuilder build.
@@ -242,6 +244,50 @@ CircularBoardBuilderTest >> testCannotBuildBoardWithWormHolesLeadingOutOfBoard [
 		raise: Error
 		withErrorMessage:
 		'Position of squares must be within Bounds of Board!'
+]
+
+{ #category : 'tests' }
+CircularBoardBuilderTest >> testCannotBuildWithCardGiverSquaresWithoutSettingCardDeck [
+
+	| aBoardBuilder aSetOfSquares |
+	aSetOfSquares := OrderedDictionary new.
+	aBoardBuilder := CircularBoardBuilder new.
+	aBoardBuilder setBoardSize: 100.
+	aBoardBuilder setNumberOfRounds: 2.
+
+	aSetOfSquares at: 'CardGivers' put: { 3 }.
+
+	self
+		should: [ aBoardBuilder setSquares: aSetOfSquares ]
+		raise: Error
+		withErrorMessage:
+		'You must set a deck of cards first to be able to add Card Givers to the map!'
+]
+
+{ #category : 'tests' }
+CircularBoardBuilderTest >> testCannotBuildWithRandomSquaresWIthoutSettingADeck [
+
+	| aBoardBuilder probabilityDistribution |
+	probabilityDistribution := Dictionary new.
+
+	probabilityDistribution at: 'EmptySquare' put: 30.
+	probabilityDistribution at: 'BlackHole' put: 20.
+	probabilityDistribution at: 'HyperSpaceJump' put: 20.
+	probabilityDistribution at: 'MoonWalk' put: 10.
+	probabilityDistribution at: 'HyperJump' put: 8.
+	probabilityDistribution at: 'AtomicBomb' put: 2.
+	probabilityDistribution at: 'CardGiver' put: 10.
+
+	aBoardBuilder := CircularBoardBuilder new.
+	aBoardBuilder setBoardSize: 100.
+	aBoardBuilder setNumberOfRounds: 2.
+	aBoardBuilder setSquareProbabilities: probabilityDistribution.
+
+	self
+		should: [ aBoardBuilder build ]
+		raise: Error
+		withErrorMessage:
+		'You must set a deck of cards first to be able to add Card Givers to the map!'
 ]
 
 { #category : 'tests' }
