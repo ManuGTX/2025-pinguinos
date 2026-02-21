@@ -128,3 +128,12 @@ CardManager >> removeEffectOf: aCard [
 			'The selected card is not active at the moment, so it cannot be removed!' ].
 	activeCardEffects := filteredEffectList
 ]
+
+{ #category : 'validation' }
+CardManager >> validateContractBetween: aContractorShip and: aContractedShip [
+	
+	aContractorShip = aContractedShip ifTrue: [ Error signal: 'A ship cannot contract itself as a mercenary!' ].
+	
+	(self getContractedShips includes: aContractedShip) ifTrue: [
+		Error signal: 'A ship cannot contract as mercenary a ship that has already been contracted by someone else!' ].
+]
