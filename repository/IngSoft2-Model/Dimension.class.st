@@ -23,13 +23,13 @@ Dimension class >> checkSignOfValue: value [
 { #category : 'instance creation' }
 Dimension class >> conversionRateFrom: aUnit to: anotherUnit [
 
-	 ^ (conversionRates at: aUnit) at: anotherUnit 
-	
+	^ (self conversionRates at: aUnit) at: anotherUnit
 ]
 
 { #category : 'instance creation' }
 Dimension class >> conversionRates [
-
+	
+	conversionRates ifNil: [ self setRates ].
 	 ^ conversionRates 
 	
 ]
