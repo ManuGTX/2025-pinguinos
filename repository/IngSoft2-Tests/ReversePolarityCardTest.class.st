@@ -17,6 +17,109 @@ ReversePolarityCardTest >> should: anErrorBlock raise: anErrorClass withErrorMes
 ]
 
 { #category : 'basic tests' }
+ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnAtomicBombNothingHappensWhenActivated [
+
+	| aGame expectedResult jorgeShip julianShip aDeck aReversePolarityCard cardsToDraw |
+	cardsToDraw := OrderedCollection with: ReversePolarityCard new.
+	jorgeShip := Ship named: 'Jorge'.
+	julianShip := Ship named: 'Julian'.
+
+	aGame := ShipBattleGame
+		         inSize: 10
+		         rounds: 2
+		         with: { (LoadedDie withSides: { 4. 3 }) }
+		         and: {
+				         jorgeShip.
+				         julianShip }
+		         withSpecialSquaresAt:
+		         (Dictionary newFrom: { ('AtomicBombs' -> { 4 }) })
+		         withDeck: (LoadedDeck cards: cardsToDraw).
+
+	aGame nextTurn. "Mueve jorge"
+
+	aDeck := aGame cardsOf: julianShip.
+	aReversePolarityCard := aDeck first.
+
+	aGame playCard: aReversePolarityCard by: julianShip target: 4. "Aplico reversePolarity en la bomba del casillero 4"
+
+	aGame nextTurn. "Mueve julian"
+
+	expectedResult := OrderedDictionary new.
+	expectedResult at: '1°' put: (Dictionary newFrom: {
+				 ('name' -> 'Jorge').
+				 ('position' -> 5).
+				 ('lap' -> 1).
+				 ('card count' -> 2) }).
+
+	expectedResult at: '2°' put: (Dictionary newFrom: {
+				 ('name' -> 'Julian').
+				 ('position' -> 4).
+				 ('lap' -> 1).
+				 ('card count' -> 1) }).
+
+	self assert: aGame boardStateWithCards equals: expectedResult
+]
+
+{ #category : 'basic tests' }
+ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnAtomicBombTwiceItsEfectStaysTheSame [
+
+	| aGame expectedResult jorgeShip julianShip aDeck aReversePolarityCard cardsToDraw |
+	cardsToDraw := OrderedCollection with: ReversePolarityCard new.
+	jorgeShip := Ship named: 'Jorge'.
+	julianShip := Ship named: 'Julian'.
+
+	aGame := ShipBattleGame
+		         inSize: 10
+		         rounds: 2
+		         with: { (LoadedDie withSides: 3) }
+		         and: {
+				         jorgeShip.
+				         julianShip }
+		         withSpecialSquaresAt:
+		         (Dictionary newFrom: { ('AtomicBombs' -> { 4 }) })
+		         withDeck: (LoadedDeck cards: cardsToDraw).
+
+	aDeck := aGame cardsOf: jorgeShip.
+	aReversePolarityCard := aDeck first.
+
+	aGame playCard: aReversePolarityCard by: jorgeShip target: 4. "Aplico reversePolarity en la bomba del casillero 4"
+
+	aGame nextTurn. "Mueve jorge"
+
+	expectedResult := OrderedDictionary new.
+	expectedResult at: '1°' put: (Dictionary newFrom: {
+				 ('name' -> 'Jorge').
+				 ('position' -> 4).
+				 ('lap' -> 1).
+				 ('card count' -> 1) }).
+
+	expectedResult at: '2°' put: (Dictionary newFrom: {
+				 ('name' -> 'Julian').
+				 ('position' -> 1).
+				 ('lap' -> 1).
+				 ('card count' -> 2) }).
+
+	self assert: aGame boardStateWithCards equals: expectedResult.
+
+	aGame playCard: aReversePolarityCard by: julianShip target: 4. "Aplico reversePolarity de nuevo en la bomba  del casillero 4"
+	aGame nextTurn. "Mueve julian, cae y se activa la bomba"
+	
+	expectedResult at: '1°' put: (Dictionary newFrom: {
+				 ('name' -> 'Julian').
+				 ('position' -> 1).
+				 ('lap' -> 1).
+				 ('card count' -> 1) }).
+
+	expectedResult at: '2°' put: (Dictionary newFrom: {
+				 ('name' -> 'Jorge').
+				 ('position' -> 1).
+				 ('lap' -> 1).
+				 ('card count' -> 1) }).
+				
+	self assert: aGame boardStateWithCards equals: expectedResult.
+]
+
+{ #category : 'basic tests' }
 ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnBlackHoleIfShipThatIsMovedBackFallsOnAnotherSpecialSquareItsEffectIsNotApplied [
 
 	| aGame expectedResult jorgeShip julianShip aDeck aReversePolarityCard cardsToDraw |

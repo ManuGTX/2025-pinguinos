@@ -17,6 +17,7 @@ AtomicBomb class >> at: aPosition [
 { #category : 'action' }
 AtomicBomb >> applyEffectTo: aShip in: aGame [
 
+	isReversed ifTrue: [ ^ self ].
 	aGame moveAllShipsBackToStart.
 	aGame breakShieldsOfAllShips
 ]
