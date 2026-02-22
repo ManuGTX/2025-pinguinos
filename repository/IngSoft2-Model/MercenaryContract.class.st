@@ -19,13 +19,13 @@ MercenaryContract class >> from: aShip with: aContractedShip usedBy: aCard [
 ]
 
 { #category : 'getter' }
-MercenaryContract >> getAllyOf: aShip [
-	
-	contractorShip = aShip 
-		  ifTrue: [ ^ contractedShip ].
+MercenaryContract >> getAllyOf: aShip against: anOpponent [
+
+	isReversed
+		ifFalse: [ aShip == contractorShip ifTrue: [ ^ contractedShip ] ]
+		ifTrue: [ anOpponent == contractorShip ifTrue: [ ^ contractedShip ] ].
 	
 	^ nil
-
 ]
 
 { #category : 'getter' }

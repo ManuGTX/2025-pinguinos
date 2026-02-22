@@ -70,12 +70,12 @@ CardManager >> getActiveEffects [
 ]
 
 { #category : 'getter' }
-CardManager >> getAlliesOf: aShip [
+CardManager >> getAlliesOf: aShip against: anOpponent [
 
 	| alliedShips |
 	
 	alliedShips := activeCardEffects collect: [ :cardEffect |
-		               cardEffect getAllyOf: aShip ].
+		               cardEffect getAllyOf: aShip against: anOpponent ].
 	alliedShips := alliedShips select: [ :alliedShip | alliedShip isNotNil ].
 
 	^ alliedShips

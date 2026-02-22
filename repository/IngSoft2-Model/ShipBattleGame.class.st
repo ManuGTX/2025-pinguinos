@@ -181,8 +181,8 @@ ShipBattleGame >> fightBetween: aggressorShip and: defendingShip [
 
 	| aggresorAllyShips defendingAllyShips aggresorShipsDiceRoll defendingShipsDiceRoll |
 	
-	aggresorAllyShips := cardManager getAlliesOf: aggressorShip.
-	defendingAllyShips := cardManager getAlliesOf: defendingShip.
+	aggresorAllyShips := cardManager getAlliesOf: aggressorShip against: defendingShip.
+	defendingAllyShips := cardManager getAlliesOf: defendingShip against: aggressorShip.
 
 	aggresorShipsDiceRoll := diceSet roll + (aggresorAllyShips
 		                          inject: 0
@@ -216,11 +216,11 @@ ShipBattleGame >> handleFights: anAggressorShip [
 
 	| defendingShip contractedShips shipsContractedByDefendingShip |
 	
-	contractedShips := cardManager getAlliesOf: anAggressorShip.
 	defendingShip := self whoDoIFight: anAggressorShip.
+	contractedShips := cardManager getAlliesOf: anAggressorShip against: defendingShip.
 
 	defendingShip ifNotNil: [
-		shipsContractedByDefendingShip := cardManager getAlliesOf: defendingShip.
+		shipsContractedByDefendingShip := cardManager getAlliesOf: defendingShip against: anAggressorShip.
 		
 		((contractedShips includes: defendingShip) or:
 			 (shipsContractedByDefendingShip includes: anAggressorShip))

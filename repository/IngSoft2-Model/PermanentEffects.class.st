@@ -19,7 +19,7 @@ PermanentEffects >> addMovement: aShip [
 ]
 
 { #category : 'getter' }
-PermanentEffects >> getAllyOf: aShip [
+PermanentEffects >> getAllyOf: aShip against: anOpponent [
 	
 	^ nil
 ]
