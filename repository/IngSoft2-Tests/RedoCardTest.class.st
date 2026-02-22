@@ -293,6 +293,60 @@ RedoCardTest >> testRedoCardCanBeUsedCorrectlyOnLastPlayedMercenaryCard [
 ]
 
 { #category : 'tests' }
+RedoCardTest >> testRedoCardCanBeUsedCorrectlyOnLastPlayedReversePolarityCard [
+
+	| aGame jorgeShip julianShip aDeck aSpeedCard aReversePolarityCard aRedoCard cardsToDraw expectedResult |
+	cardsToDraw := OrderedCollection new.
+
+	cardsToDraw add: ReversePolarityCard new. "Jorge"
+	cardsToDraw add: SpeedCard new. "Jorge"
+	cardsToDraw add: RedoCard new. "Julian"
+	cardsToDraw add: RedoCard new. "Julian"
+
+	jorgeShip := Ship named: 'Jorge'.
+	julianShip := Ship named: 'Julian'.
+
+	aGame := ShipBattleGame
+		         inSize: 10
+		         rounds: 2
+		         with: { (LoadedDie withSides: { 2. 5 }) }
+		         and: {
+				         jorgeShip.
+				         julianShip }
+		         withSpecialSquaresAt:
+		         (Dictionary newFrom: { ('BlackHoles' -> { 4. 6 }) })
+		         withDeck: (LoadedDeck cards: cardsToDraw).
+
+	aDeck := aGame cardsOf: jorgeShip.
+	aReversePolarityCard := aDeck first.
+	aSpeedCard := aDeck second.
+
+	aGame playCard: aReversePolarityCard by: jorgeShip target: 4. "Jorge juega ReversePolarity en el blackhole"
+	aGame nextTurn. "jorge mueve a 3"
+
+	aDeck := aGame cardsOf: julianShip.
+	aRedoCard := aDeck first.
+
+	aGame playCard: aRedoCard by: julianShip target: 6. "julian juega redo card sobre y por ende reversepolarity y revierte al blakhole de 6"
+
+	aGame nextTurn. "julian mueve al blackhole en 6"
+
+	expectedResult := OrderedDictionary new.
+	expectedResult at: '1°' put: (Dictionary newFrom: {
+				 ('name' -> 'Julian').
+				 ('position' -> 6).
+				 ('lap' -> 1).
+				 ('card count' -> 1) }).
+	expectedResult at: '2°' put: (Dictionary newFrom: {
+				 ('name' -> 'Jorge').
+				 ('position' -> 9).
+				 ('lap' -> 0).
+				 ('card count' -> 1) }).
+
+	self assert: aGame boardStateWithCards equals: expectedResult
+]
+
+{ #category : 'tests' }
 RedoCardTest >> testRedoCardCanBeUsedCorrectlyOnLastPlayedSpeedCard [
 
 	| aGame jorgeShip julianShip aDeck aSpeedCard aRedoCard cardsToDraw expectedResult |

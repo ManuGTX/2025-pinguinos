@@ -36,7 +36,9 @@ MercenaryContract >> getContractedMercenary [
 
 { #category : 'initialization' }
 MercenaryContract >> initializeFrom: aShip with: aContractedShip usedBy: aCard [
-	
+
+	super initialize.
+
 	contractorShip := aShip.
 	contractedShip := aContractedShip.
 	usedBy := aCard.

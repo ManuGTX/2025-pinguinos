@@ -205,6 +205,12 @@ ShipBattleGame >> fightBetween: aggressorShip and: defendingShip [
 				aggresorAllyShip loseShield ] ]
 ]
 
+{ #category : 'adding' }
+ShipBattleGame >> getActiveEffects [ 
+
+	^ cardManager getActiveEffects
+]
+
 { #category : 'helper' }
 ShipBattleGame >> handleFights: anAggressorShip [
 
