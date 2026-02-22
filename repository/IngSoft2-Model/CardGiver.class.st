@@ -29,3 +29,9 @@ CardGiver >> initializeAt: aPosition with: aDeck [
 	super initializeAtPosition: aPosition.
 	deck:= aDeck.
 ]
+
+{ #category : 'testing' }
+CardGiver >> isSpecial [
+
+	^ true
+]

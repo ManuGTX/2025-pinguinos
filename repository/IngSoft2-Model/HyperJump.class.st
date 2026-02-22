@@ -37,6 +37,12 @@ HyperJump >> initializeAt: position [
 	1 to: parsecListSize do: [ :i | parsecList add: i + 1 ]
 ]
 
+{ #category : 'testing' }
+HyperJump >> isSpecial [
+
+	^ true
+]
+
 { #category : 'accessing' }
 HyperJump >> parsecsToMove [
 

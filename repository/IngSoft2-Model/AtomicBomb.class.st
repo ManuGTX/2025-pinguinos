@@ -26,3 +26,9 @@ AtomicBomb >> initializeAt: aPosition [
 	
 	super initializeAtPosition: aPosition .
 ]
+
+{ #category : 'testing' }
+AtomicBomb >> isSpecial [
+
+	^ true
+]

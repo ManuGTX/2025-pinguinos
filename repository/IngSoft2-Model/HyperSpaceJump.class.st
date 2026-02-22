@@ -15,3 +15,9 @@ HyperSpaceJump >> applyEffectTo: aShip in: aGame [
 	aShip loseShield.
 
 ]
+
+{ #category : 'testing' }
+HyperSpaceJump >> isSpecial [
+
+	^ true
+]

@@ -10,6 +10,14 @@ Class {
 
 { #category : 'action' }
 BlackHole >> applyEffectTo: aShip in: aGame [
-	
-	aGame moveAndIgnoreNewEffectsShip: aShip by: -4.
+
+	isReversed
+		ifFalse: [ aGame moveAndIgnoreNewEffectsShip: aShip by: -4 ]
+		ifTrue: [ aGame moveAndIgnoreNewEffectsAllShipsBy: -4 exceptFor: aShip ]
+]
+
+{ #category : 'testing' }
+BlackHole >> isSpecial [
+
+	^ true
 ]

@@ -20,7 +20,7 @@ MoonWalk class >> by: aNumberOfSquares at: aPosition [
 { #category : 'action' }
 MoonWalk >> applyEffectTo: aShip in: aGame [
 
-	aGame moveAllShipsBy: numberToMoveBackOtherShips exceptFor: aShip
+	aGame moveAndIgnoreNewEffectsAllShipsBy: numberToMoveBackOtherShips exceptFor: aShip
 ]
 
 { #category : 'initialization' }
@@ -28,4 +28,10 @@ MoonWalk >> initializeWith: numberToMoveBack at: position [
 
 	super initializeAtPosition: position.
 	numberToMoveBackOtherShips := -1 * numberToMoveBack "Me muevo para atras entonces negativo"
+]
+
+{ #category : 'testing' }
+MoonWalk >> isSpecial [
+
+	^ true
 ]

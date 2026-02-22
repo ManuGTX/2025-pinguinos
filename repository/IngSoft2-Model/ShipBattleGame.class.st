@@ -216,7 +216,7 @@ ShipBattleGame >> hyperJump: aShip byParsecs: parsecsToMove [
 	| spacesToMove |
 	
 	spacesToMove := (board sizeInParsecs / parsecsToMove) convertToCellUnits floor.
-	aShip withNoEffectsMove: spacesToMove value onCircularBoard: board
+	aShip withNoEffectsMoveBy: spacesToMove value onCircularBoard: board
 ]
 
 { #category : 'initialization' }
@@ -255,17 +255,17 @@ ShipBattleGame >> moveAllShipsBackToStart [
 ]
 
 { #category : 'game controls' }
-ShipBattleGame >> moveAllShipsBy: numberToMove exceptFor: exceptionShip [
+ShipBattleGame >> moveAndIgnoreNewEffectsAllShipsBy: numberToMove exceptFor: exceptionShip [
 
 	ships do: [ :ship |
 		ship ~= exceptionShip ifTrue: [
-			ship moveBy: numberToMove onCircularBoard: board of: self ] ]
+			self moveAndIgnoreNewEffectsShip: ship by: numberToMove ] ]
 ]
 
 { #category : 'game controls' }
 ShipBattleGame >> moveAndIgnoreNewEffectsShip: aShip by: aNumberToMove [
 
-	aShip withNoEffectsMove: aNumberToMove onCircularBoard: board.
+	aShip withNoEffectsMoveBy: aNumberToMove onCircularBoard: board.
 ]
 
 { #category : 'game controls' }
@@ -293,10 +293,15 @@ ShipBattleGame >> playCard: aCard by: aShip [
 { #category : 'card usage' }
 ShipBattleGame >> playCard: aCard by: aShip target: aTarget [
 	
+	| actualTarget |
+	
+	actualTarget := aTarget.
+	aTarget isInteger ifTrue: [ actualTarget := board getSquareAt: aTarget ].
+	
 	self canIKeepPlaying.
 	self can: aShip playThisCard: aCard.
 	
-	cardManager playCard: aCard by: aShip target: aTarget.
+	cardManager playCard: aCard by: aShip target: actualTarget.
 ]
 
 { #category : 'game controls' }

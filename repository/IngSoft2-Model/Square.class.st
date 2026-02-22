@@ -6,7 +6,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'status',
-		'origin'
+		'origin',
+		'isReversed'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -63,11 +64,24 @@ Square >> getPosition [
 Square >> initializeAtPosition: anXPosition [
 
 	origin := anXPosition.
+	isReversed := false.
 
+]
+
+{ #category : 'testing' }
+Square >> isSpecial [
+
+	^ false
 ]
 
 { #category : 'getter' }
 Square >> landingCoordinate [
 
 	^ origin
+]
+
+{ #category : 'action' }
+Square >> reversePolarity [
+
+	isReversed := isReversed not.
 ]

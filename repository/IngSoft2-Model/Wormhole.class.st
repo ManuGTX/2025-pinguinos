@@ -52,3 +52,9 @@ Wormhole >> initializeTo: aDestination from: anOriginPosition [
 	super initializeAtPosition: anOriginPosition.
 	destination := aDestination.
 ]
+
+{ #category : 'testing' }
+Wormhole >> isSpecial [
+
+	^ true
+]
