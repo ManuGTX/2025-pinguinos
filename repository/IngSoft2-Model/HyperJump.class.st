@@ -32,7 +32,7 @@ HyperJump >> initializeAt: position [
 	parsecListSize := 5.
 	currentIndex := 1.
 
-	super initializeAtPosition: position.
+	super initializeAt: position.
 
 	1 to: parsecListSize do: [ :i | parsecList add: i + 1 ]
 ]

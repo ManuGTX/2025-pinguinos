@@ -58,6 +58,11 @@ CardManager >> applyLastSquareEffectTo: aShip [
 	board applyLastSquareEffectTo: aShip in: game
 ]
 
+{ #category : 'actions' }
+CardManager >> drawCard [
+	^ deck drawCard 
+]
+
 { #category : 'getter' }
 CardManager >> getAlliesOf: aShip [
 

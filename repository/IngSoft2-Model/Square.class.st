@@ -18,7 +18,7 @@ Square class >> at: aXPosition [
 		
 	self validateX: aXPosition.
 		
-	^self new initializeAtPosition: aXPosition.
+	^self new initializeAt: aXPosition.
 ]
 
 { #category : 'validation' }
@@ -61,7 +61,7 @@ Square >> getPosition [
 ]
 
 { #category : 'initialization' }
-Square >> initializeAtPosition: anXPosition [
+Square >> initializeAt: anXPosition [
 
 	origin := anXPosition.
 	isReversed := false.

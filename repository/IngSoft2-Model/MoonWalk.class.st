@@ -26,7 +26,7 @@ MoonWalk >> applyEffectTo: aShip in: aGame [
 { #category : 'initialization' }
 MoonWalk >> initializeWith: numberToMoveBack at: position [
 
-	super initializeAtPosition: position.
+	super initializeAt: position.
 	numberToMoveBackOtherShips := -1 * numberToMoveBack "Me muevo para atras entonces negativo"
 ]
 

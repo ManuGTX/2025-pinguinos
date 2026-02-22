@@ -131,6 +131,13 @@ ShipBattleGame >> breakShieldsOfAllShips [
 	ships do: [ :ship | ship loseShield ]
 ]
 
+{ #category : 'game controls' }
+ShipBattleGame >> breakShieldsOfAllShipsExceptFor: exceptionShip [
+
+	ships do: [ :ship |
+		ship ~= exceptionShip ifTrue: [ ship loseShield ] ]
+]
+
 { #category : 'testing' }
 ShipBattleGame >> can: aShip playThisCard: aCard [
 
@@ -153,6 +160,20 @@ ShipBattleGame >> compareProgressOf2Ships: shipA and: shipB [
 
 	^ shipA laps > shipB laps or: [ "Comparo primero numero de vueltas, si son iguales paso a posicion en el tablero."
 		  shipA laps = shipB laps and: [ shipA position > shipB position ] ]
+]
+
+{ #category : 'card usage' }
+ShipBattleGame >> drawCardFor: aShip [
+
+	aShip receive: (cardManager drawCard)
+]
+
+{ #category : 'card usage' }
+ShipBattleGame >> drawCardsForEveryoneExceptFor: anExceptionShip [
+
+	ships do: [ :ship |
+		ship ~= anExceptionShip ifTrue: [
+			ship receive: cardManager drawCard ] ]
 ]
 
 { #category : 'game controls' }

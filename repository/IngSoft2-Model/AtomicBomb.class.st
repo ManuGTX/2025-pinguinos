@@ -22,12 +22,6 @@ AtomicBomb >> applyEffectTo: aShip in: aGame [
 	aGame breakShieldsOfAllShips
 ]
 
-{ #category : 'initialization' }
-AtomicBomb >> initializeAt: aPosition [
-	
-	super initializeAtPosition: aPosition .
-]
-
 { #category : 'testing' }
 AtomicBomb >> isSpecial [
 

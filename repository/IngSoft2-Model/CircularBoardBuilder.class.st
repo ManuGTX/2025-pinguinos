@@ -52,7 +52,7 @@ CircularBoardBuilder >> createCardGiversAt: squarePositions [
 			'You must set a deck of cards first to be able to add Card Givers to the map!' ].
 	
 	squarePositions do: [ :position |
-		map at: position put: (CardGiver at: position with: cardDeck) ]
+		map at: position put: (CardGiver at: position) ]
 ]
 
 { #category : 'accessing' }

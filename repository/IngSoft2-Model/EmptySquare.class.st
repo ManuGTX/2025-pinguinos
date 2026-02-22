@@ -19,9 +19,3 @@ EmptySquare >> applyEffectTo: aShip in: aGame [
 		
 	 ^ self
 ]
-
-{ #category : 'accessing' }
-EmptySquare >> initializeAt: aPosition [
-	
-	super initializeAtPosition: aPosition.
-]

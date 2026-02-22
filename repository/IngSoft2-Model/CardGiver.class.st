@@ -4,30 +4,22 @@ Implementation of CardGiver special square.
 Class {
 	#name : 'CardGiver',
 	#superclass : 'Square',
-	#instVars : [
-		'deck'
-	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'accessing' }
-CardGiver class >> at: aPosition with: aDeck [
+CardGiver class >> at: aPosition [
 
-	^self new initializeAt: aPosition with: aDeck
+	^self new initializeAt: aPosition
 ]
 
 { #category : 'action' }
-CardGiver >> applyEffectTo: aShip in: aBoard [
+CardGiver >> applyEffectTo: aShip in: aGame [
 
-	aShip receive: deck drawCard
-]
-
-{ #category : 'accessing' }
-CardGiver >> initializeAt: aPosition with: aDeck [
-	
-	super initializeAtPosition: aPosition.
-	deck:= aDeck.
+	isReversed
+		ifFalse: [ aGame drawCardFor: aShip ]
+		ifTrue: [ aGame drawCardsForEveryoneExceptFor: aShip ]
 ]
 
 { #category : 'testing' }

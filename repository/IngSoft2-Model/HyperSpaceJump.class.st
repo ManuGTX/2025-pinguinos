@@ -11,9 +11,13 @@ Class {
 { #category : 'action' }
 HyperSpaceJump >> applyEffectTo: aShip in: aGame [
 
-	aGame moveAndIgnoreNewEffectsShip: aShip by: 4.
-	aShip loseShield.
-
+	isReversed
+		ifFalse: [
+			aGame moveAndIgnoreNewEffectsShip: aShip by: 4.
+			aShip loseShield ]
+		ifTrue: [
+			aGame moveAndIgnoreNewEffectsAllShipsBy: 4 exceptFor: aShip.
+			aGame breakShieldsOfAllShipsExceptFor: aShip ]
 ]
 
 { #category : 'testing' }

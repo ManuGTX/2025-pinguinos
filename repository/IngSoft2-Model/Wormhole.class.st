@@ -49,7 +49,7 @@ Wormhole >> getDestination [
 { #category : 'initialization' }
 Wormhole >> initializeTo: aDestination from: anOriginPosition [
 	
-	super initializeAtPosition: anOriginPosition.
+	super initializeAt: anOriginPosition.
 	destination := aDestination.
 ]
 
