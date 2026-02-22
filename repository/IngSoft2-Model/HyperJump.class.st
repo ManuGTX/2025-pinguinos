@@ -22,7 +22,10 @@ HyperJump class >> at: aPosition [
 { #category : 'action' }
 HyperJump >> applyEffectTo: aShip in: aGame [
 
-	aGame hyperJump: aShip byParsecs: self parsecsToMove
+	isReversed
+		ifFalse: [ aGame hyperJump: aShip byParsecs: self parsecsToMove ]
+		ifTrue: [
+		aGame hyperJumpEveryoneExcept: aShip byParsecs: self parsecsToMove ]
 ]
 
 { #category : 'initialization' }

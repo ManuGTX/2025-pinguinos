@@ -20,7 +20,15 @@ MoonWalk class >> by: aNumberOfSquares at: aPosition [
 { #category : 'action' }
 MoonWalk >> applyEffectTo: aShip in: aGame [
 
-	aGame moveAndIgnoreNewEffectsAllShipsBy: numberToMoveBackOtherShips exceptFor: aShip
+	isReversed
+		ifFalse: [
+			aGame
+				moveAndIgnoreNewEffectsAllShipsBy: numberToMoveBackOtherShips
+				exceptFor: aShip ]
+		ifTrue: [
+			aGame
+				moveAndIgnoreNewEffectsShip: aShip
+				by: numberToMoveBackOtherShips ]
 ]
 
 { #category : 'initialization' }

@@ -240,6 +240,18 @@ ShipBattleGame >> hyperJump: aShip byParsecs: parsecsToMove [
 	aShip withNoEffectsMoveBy: spacesToMove value onCircularBoard: board
 ]
 
+{ #category : 'game controls' }
+ShipBattleGame >> hyperJumpEveryoneExcept: anExceptionShip byParsecs: parsecsToMove [
+
+	| spacesToMove |
+	spacesToMove := (board sizeInParsecs / parsecsToMove)
+		                convertToCellUnits floor.
+
+	ships do: [ :ship |
+		ship ~= anExceptionShip ifTrue: [
+			ship withNoEffectsMoveBy: spacesToMove value onCircularBoard: board ] ]
+]
+
 { #category : 'initialization' }
 ShipBattleGame >> initializeInBoard: aBoard with: aDiceSet and: aSetOfShips withDeck: aDeck [
 

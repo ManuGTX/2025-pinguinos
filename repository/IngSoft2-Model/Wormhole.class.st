@@ -37,7 +37,9 @@ Wormhole class >> from: anOriginPosition to: aDestiny [
 { #category : 'action' }
 Wormhole >> applyEffectTo: aShip in: aGame [
 
-	aGame moveShip: aShip to: destination.
+	isReversed
+		ifFalse: [ aGame moveShip: aShip to: destination ]
+		ifTrue: [ aGame moveEveryShipExcept: aShip to: destination ]
 ]
 
 { #category : 'getter' }
