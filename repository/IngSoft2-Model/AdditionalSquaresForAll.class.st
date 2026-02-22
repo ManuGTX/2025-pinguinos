@@ -19,5 +19,7 @@ AdditionalSquaresForAll class >> of: aNumber usedBy: aCard [
 { #category : 'one more square' }
 AdditionalSquaresForAll >> addMovement: aShip [
 
-	^ numberOfSquares
+	isReversed
+		ifFalse: [ ^ numberOfSquares ]
+		ifTrue: [ ^ numberOfSquares negated ]
 ]

@@ -20,6 +20,8 @@ AdditionalSquares >> addMovement: aShip [
 
 { #category : 'initialization' }
 AdditionalSquares >> initializeOf: aNumber usedBy: aCard [
+
+	super initialize.
 	
 	numberOfSquares := aNumber.
 	usedBy := aCard.

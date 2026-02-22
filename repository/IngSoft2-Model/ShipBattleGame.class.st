@@ -131,6 +131,13 @@ ShipBattleGame >> breakShieldsOfAllShips [
 	ships do: [ :ship | ship loseShield ]
 ]
 
+{ #category : 'game controls' }
+ShipBattleGame >> breakShieldsOfAllShipsExceptFor: exceptionShip [
+
+	ships do: [ :ship |
+		ship ~= exceptionShip ifTrue: [ ship loseShield ] ]
+]
+
 { #category : 'testing' }
 ShipBattleGame >> can: aShip playThisCard: aCard [
 
@@ -155,13 +162,27 @@ ShipBattleGame >> compareProgressOf2Ships: shipA and: shipB [
 		  shipA laps = shipB laps and: [ shipA position > shipB position ] ]
 ]
 
+{ #category : 'card usage' }
+ShipBattleGame >> drawCardFor: aShip [
+
+	aShip receive: (cardManager drawCard)
+]
+
+{ #category : 'card usage' }
+ShipBattleGame >> drawCardsForEveryoneExceptFor: anExceptionShip [
+
+	ships do: [ :ship |
+		ship ~= anExceptionShip ifTrue: [
+			ship receive: cardManager drawCard ] ]
+]
+
 { #category : 'game controls' }
 ShipBattleGame >> fightBetween: aggressorShip and: defendingShip [
 
 	| aggresorAllyShips defendingAllyShips aggresorShipsDiceRoll defendingShipsDiceRoll |
 	
-	aggresorAllyShips := cardManager getAlliesOf: aggressorShip.
-	defendingAllyShips := cardManager getAlliesOf: defendingShip.
+	aggresorAllyShips := cardManager getAlliesOf: aggressorShip against: defendingShip.
+	defendingAllyShips := cardManager getAlliesOf: defendingShip against: aggressorShip.
 
 	aggresorShipsDiceRoll := diceSet roll + (aggresorAllyShips
 		                          inject: 0
@@ -184,16 +205,22 @@ ShipBattleGame >> fightBetween: aggressorShip and: defendingShip [
 				aggresorAllyShip loseShield ] ]
 ]
 
+{ #category : 'adding' }
+ShipBattleGame >> getActiveEffects [ 
+
+	^ cardManager getActiveEffects
+]
+
 { #category : 'helper' }
 ShipBattleGame >> handleFights: anAggressorShip [
 
 	| defendingShip contractedShips shipsContractedByDefendingShip |
 	
-	contractedShips := cardManager getAlliesOf: anAggressorShip.
 	defendingShip := self whoDoIFight: anAggressorShip.
+	contractedShips := cardManager getAlliesOf: anAggressorShip against: defendingShip.
 
 	defendingShip ifNotNil: [
-		shipsContractedByDefendingShip := cardManager getAlliesOf: defendingShip.
+		shipsContractedByDefendingShip := cardManager getAlliesOf: defendingShip against: anAggressorShip.
 		
 		((contractedShips includes: defendingShip) or:
 			 (shipsContractedByDefendingShip includes: anAggressorShip))
@@ -216,7 +243,19 @@ ShipBattleGame >> hyperJump: aShip byParsecs: parsecsToMove [
 	| spacesToMove |
 	
 	spacesToMove := (board sizeInParsecs / parsecsToMove) convertToCellUnits floor.
-	aShip withNoEffectsMove: spacesToMove value onCircularBoard: board
+	aShip withNoEffectsMoveBy: spacesToMove value onCircularBoard: board
+]
+
+{ #category : 'game controls' }
+ShipBattleGame >> hyperJumpEveryoneExcept: anExceptionShip byParsecs: parsecsToMove [
+
+	| spacesToMove |
+	spacesToMove := (board sizeInParsecs / parsecsToMove)
+		                convertToCellUnits floor.
+
+	ships do: [ :ship |
+		ship ~= anExceptionShip ifTrue: [
+			ship withNoEffectsMoveBy: spacesToMove value onCircularBoard: board ] ]
 ]
 
 { #category : 'initialization' }
@@ -255,17 +294,17 @@ ShipBattleGame >> moveAllShipsBackToStart [
 ]
 
 { #category : 'game controls' }
-ShipBattleGame >> moveAllShipsBy: numberToMove exceptFor: exceptionShip [
+ShipBattleGame >> moveAndIgnoreNewEffectsAllShipsBy: numberToMove exceptFor: exceptionShip [
 
 	ships do: [ :ship |
 		ship ~= exceptionShip ifTrue: [
-			ship moveBy: numberToMove onCircularBoard: board of: self ] ]
+			self moveAndIgnoreNewEffectsShip: ship by: numberToMove ] ]
 ]
 
 { #category : 'game controls' }
 ShipBattleGame >> moveAndIgnoreNewEffectsShip: aShip by: aNumberToMove [
 
-	aShip withNoEffectsMove: aNumberToMove onCircularBoard: board.
+	aShip withNoEffectsMoveBy: aNumberToMove onCircularBoard: board.
 ]
 
 { #category : 'game controls' }
@@ -293,10 +332,15 @@ ShipBattleGame >> playCard: aCard by: aShip [
 { #category : 'card usage' }
 ShipBattleGame >> playCard: aCard by: aShip target: aTarget [
 	
+	| actualTarget |
+	
+	actualTarget := aTarget.
+	aTarget isInteger ifTrue: [ actualTarget := board getSquareAt: aTarget ].
+	
 	self canIKeepPlaying.
 	self can: aShip playThisCard: aCard.
 	
-	cardManager playCard: aCard by: aShip target: aTarget.
+	cardManager playCard: aCard by: aShip target: actualTarget.
 ]
 
 { #category : 'game controls' }

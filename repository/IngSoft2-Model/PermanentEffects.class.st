@@ -5,7 +5,8 @@ Class {
 	#name : 'PermanentEffects',
 	#superclass : 'Object',
 	#instVars : [
-		'usedBy'
+		'usedBy',
+		'isReversed'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -18,7 +19,7 @@ PermanentEffects >> addMovement: aShip [
 ]
 
 { #category : 'getter' }
-PermanentEffects >> getAllyOf: aShip [
+PermanentEffects >> getAllyOf: aShip against: anOpponent [
 	
 	^ nil
 ]
@@ -33,4 +34,18 @@ PermanentEffects >> getCardThatAppliedEffect [
 PermanentEffects >> getContractedMercenary [
 	
 	^ nil
+]
+
+{ #category : 'initialization' }
+PermanentEffects >> initialize [
+
+	super initialize.
+	isReversed := false
+]
+
+{ #category : 'action' }
+PermanentEffects >> reverseEffect [
+
+	isReversed := isReversed not.
+	
 ]

@@ -17,12 +17,13 @@ AtomicBomb class >> at: aPosition [
 { #category : 'action' }
 AtomicBomb >> applyEffectTo: aShip in: aGame [
 
+	isReversed ifTrue: [ ^ self ].
 	aGame moveAllShipsBackToStart.
 	aGame breakShieldsOfAllShips
 ]
 
-{ #category : 'initialization' }
-AtomicBomb >> initializeAt: aPosition [
-	
-	super initializeAtPosition: aPosition .
+{ #category : 'testing' }
+AtomicBomb >> isSpecial [
+
+	^ true
 ]

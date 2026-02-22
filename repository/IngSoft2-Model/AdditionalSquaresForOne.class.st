@@ -21,9 +21,11 @@ AdditionalSquaresForOne class >> of: aNumber to: aTargetShip usedBy: aCard [
 { #category : 'one more square' }
 AdditionalSquaresForOne >> addMovement: aShip [
 
-	^ targetShip = aShip 
-		  ifTrue: [ numberOfSquares ]
-		  ifFalse: [ 0 ]
+	targetShip = aShip ifFalse: [ ^ 0 ].
+
+	isReversed
+		ifFalse: [ ^ numberOfSquares ]
+		ifTrue: [ ^ numberOfSquares negated ]
 ]
 
 { #category : 'initialization' }
