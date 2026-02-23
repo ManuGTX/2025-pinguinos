@@ -63,12 +63,6 @@ CardManager >> drawCard [
 	^ deck drawCard 
 ]
 
-{ #category : 'adding' }
-CardManager >> getActiveEffects [
-	
-	^ activeCardEffects
-]
-
 { #category : 'getter' }
 CardManager >> getAlliesOf: aShip against: anOpponent [
 
@@ -140,7 +134,6 @@ CardManager >> playCard: aCard by: aShip target: aTarget [
 CardManager >> removeEffectOf: aCard [
 
 	| filteredEffectList |
-	
 	filteredEffectList := activeCardEffects reject: [ :activeCardEffect |
 		                      activeCardEffect getCardThatAppliedEffect
 		                      == aCard ].
@@ -166,7 +159,7 @@ CardManager >> reverseEffectOf: aCard [
 		Error signal:
 			'The selected card has more than 1 effect active at the moment!' ].
 
-	(filteredEffectList first) reverseEffect 
+	filteredEffectList first reverseEffect
 ]
 
 { #category : 'validation' }
