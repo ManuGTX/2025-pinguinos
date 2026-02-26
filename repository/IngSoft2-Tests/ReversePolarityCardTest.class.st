@@ -40,7 +40,7 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnAtomicBombNothingH
 	aDeck := aGame cardsOf: julianShip.
 	aReversePolarityCard := aDeck first.
 
-	aGame playCard: aReversePolarityCard by: julianShip target: 4. "Aplico reversePolarity en la bomba del casillero 4"
+	aGame playCard: aReversePolarityCard by: julianShip targetPosition: 4. "Aplico reversePolarity en la bomba del casillero 4"
 
 	aGame nextTurn. "Mueve julian"
 
@@ -85,7 +85,7 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnAtomicBombTwiceIts
 	aDeck := aGame cardsOf: jorgeShip.
 	aReversePolarityCard := aDeck first.
 
-	aGame playCard: aReversePolarityCard by: jorgeShip target: 4. "Aplico reversePolarity en la bomba del casillero 4"
+	aGame playCard: aReversePolarityCard by: jorgeShip targetPosition: 4. "Aplico reversePolarity en la bomba del casillero 4"
 
 	aGame nextTurn. "Mueve jorge"
 
@@ -104,7 +104,7 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnAtomicBombTwiceIts
 
 	self assert: aGame boardStateWithCards equals: expectedResult.
 
-	aGame playCard: aReversePolarityCard by: julianShip target: 4. "Aplico reversePolarity de nuevo en la bomba  del casillero 4"
+	aGame playCard: aReversePolarityCard by: julianShip targetPosition: 4. "Aplico reversePolarity de nuevo en la bomba  del casillero 4"
 	aGame nextTurn. "Mueve julian, cae y se activa la bomba"
 
 	expectedResult at: '1°' put: (Dictionary newFrom: {
@@ -147,7 +147,7 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnBlackHoleIfShipTha
 	aDeck := aGame cardsOf: jorgeShip.
 	aReversePolarityCard := aDeck first.
 	
-	aGame playCard: aReversePolarityCard by: jorgeShip target: 4. "Aplico reversePolarity en el blackhole del casillero 4"
+	aGame playCard: aReversePolarityCard by: jorgeShip targetPosition: 4. "Aplico reversePolarity en el blackhole del casillero 4"
 	
 	aGame nextTurn. "Mueve jorge"
 
@@ -191,7 +191,7 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnBlackHoleItsEffect
 	aDeck := aGame cardsOf: jorgeShip.
 	aReversePolarityCard := aDeck first.
 
-	aGame playCard: aReversePolarityCard by: jorgeShip target: 4. "Aplico reversePolarity en el blackhole del casillero 4"
+	aGame playCard: aReversePolarityCard by: jorgeShip targetPosition: 4. "Aplico reversePolarity en el blackhole del casillero 4"
 
 	aGame nextTurn. "Mueve jorge"
 
@@ -239,7 +239,7 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnBlackHoleOtherBlac
 	aDeck := aGame cardsOf: jorgeShip.
 	aReversePolarityCard := aDeck first.
 	
-	aGame playCard: aReversePolarityCard by: jorgeShip target: 2. "Aplico reversePolarity en el blackhole del casillero 2"
+	aGame playCard: aReversePolarityCard by: jorgeShip targetPosition: 2. "Aplico reversePolarity en el blackhole del casillero 2"
 	
 	aGame nextTurn. "Mueve jorge"
 
@@ -281,8 +281,8 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnBlackHoleThriceIts
 	aDeck := aGame cardsOf: jorgeShip.
 	aReversePolarityCard := aDeck first.
 
-	aGame playCard: aReversePolarityCard by: jorgeShip target: 4. "Aplico reversePolarity en el blackhole del casillero 4"
-	aGame playCard: aReversePolarityCard by: jorgeShip target: 4. "Aplico reversePolarity en el blackhole del casillero 4"
+	aGame playCard: aReversePolarityCard by: jorgeShip targetPosition: 4. "Aplico reversePolarity en el blackhole del casillero 4"
+	aGame playCard: aReversePolarityCard by: jorgeShip targetPosition: 4. "Aplico reversePolarity en el blackhole del casillero 4"
 
 	aGame nextTurn. "Mueve jorge"
 
@@ -301,7 +301,7 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnBlackHoleThriceIts
 
 	self assert: aGame boardStateWithCards equals: expectedResult.
 
-	aGame playCard: aReversePolarityCard by: julianShip target: 4. "Aplico reversePolarity de nuevo en el blackhole del casillero 4"
+	aGame playCard: aReversePolarityCard by: julianShip targetPosition: 4. "Aplico reversePolarity de nuevo en el blackhole del casillero 4"
 	aGame nextTurn. "Mueve julian"
 	
 	expectedResult at: '1°' put: (Dictionary newFrom: {
@@ -341,7 +341,7 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnBlackHoleTwiceItsE
 	aDeck := aGame cardsOf: jorgeShip.
 	aReversePolarityCard := aDeck first.
 
-	aGame playCard: aReversePolarityCard by: jorgeShip target: 4. "Aplico reversePolarity en el blackhole del casillero 4"
+	aGame playCard: aReversePolarityCard by: jorgeShip targetPosition: 4. "Aplico reversePolarity en el blackhole del casillero 4"
 
 	aGame nextTurn. "Mueve jorge"
 
@@ -360,7 +360,7 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnBlackHoleTwiceItsE
 
 	self assert: aGame boardStateWithCards equals: expectedResult.
 
-	aGame playCard: aReversePolarityCard by: julianShip target: 4. "Aplico reversePolarity de nuevo en el blackhole del casillero 4"
+	aGame playCard: aReversePolarityCard by: julianShip targetPosition: 4. "Aplico reversePolarity de nuevo en el blackhole del casillero 4"
 	aGame nextTurn. "Mueve julian"
 	
 	expectedResult at: '1°' put: (Dictionary newFrom: {
@@ -402,7 +402,7 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnCardGiverItsEffect
 	aDeck := aGame cardsOf: jorgeShip.
 	aReversePolarityCard := aDeck first.
 
-	aGame playCard: aReversePolarityCard by: jorgeShip target: 4. "Aplico reversePolarity en el card giver del casillero 4"
+	aGame playCard: aReversePolarityCard by: jorgeShip targetPosition: 4. "Aplico reversePolarity en el card giver del casillero 4"
 
 	aGame nextTurn. "Mueve jorge"
 
@@ -450,8 +450,8 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnCardGiverTwiceItsE
 	aDeck := aGame cardsOf: jorgeShip.
 	aReversePolarityCard := aDeck first.
 
-	aGame playCard: aReversePolarityCard by: jorgeShip target: 4. "Aplico reversePolarity en el card giver del casillero 4"
-	aGame playCard: aReversePolarityCard by: jorgeShip target: 4. "Aplico reversePolarity en el card giver del casillero 4"
+	aGame playCard: aReversePolarityCard by: jorgeShip targetPosition: 4. "Aplico reversePolarity en el card giver del casillero 4"
+	aGame playCard: aReversePolarityCard by: jorgeShip targetPosition: 4. "Aplico reversePolarity en el card giver del casillero 4"
 
 	aGame nextTurn. "Mueve jorge"
 
@@ -495,7 +495,7 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnHyperJumpItsEffect
 	aDeck := aGame cardsOf: jorgeShip.
 	aReversePolarityCard := aDeck first.
 
-	aGame playCard: aReversePolarityCard by: jorgeShip target: 4. "Aplico reversePolarity en el HyperJump del casillero 4"
+	aGame playCard: aReversePolarityCard by: jorgeShip targetPosition: 4. "Aplico reversePolarity en el HyperJump del casillero 4"
 
 	aGame nextTurn. "Mueve jorge"
 
@@ -543,8 +543,8 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnHyperJumpTwiceItsE
 	aDeck := aGame cardsOf: jorgeShip.
 	aReversePolarityCard := aDeck first.
 
-	aGame playCard: aReversePolarityCard by: jorgeShip target: 4. "Aplico reversePolarity en el HyperJump del casillero 4"
-	aGame playCard: aReversePolarityCard by: jorgeShip target: 4. "Aplico reversePolarity en el HyperJump del casillero 4"
+	aGame playCard: aReversePolarityCard by: jorgeShip targetPosition: 4. "Aplico reversePolarity en el HyperJump del casillero 4"
+	aGame playCard: aReversePolarityCard by: jorgeShip targetPosition: 4. "Aplico reversePolarity en el HyperJump del casillero 4"
 
 	aGame nextTurn. "Mueve jorge"
 
@@ -588,7 +588,7 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnHyperSpaceJumpItsE
 	aDeck := aGame cardsOf: jorgeShip.
 	aReversePolarityCard := aDeck first.
 
-	aGame playCard: aReversePolarityCard by: jorgeShip target: 4. "Aplico reversePolarity en el HyperSpaceJump del casillero 4"
+	aGame playCard: aReversePolarityCard by: jorgeShip targetPosition: 4. "Aplico reversePolarity en el HyperSpaceJump del casillero 4"
 
 	aGame nextTurn. "Mueve jorge"
 
@@ -638,8 +638,8 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnHyperSpaceJumpTwic
 	aDeck := aGame cardsOf: jorgeShip.
 	aReversePolarityCard := aDeck first.
 
-	aGame playCard: aReversePolarityCard by: jorgeShip target: 4. "Aplico reversePolarity en el HyperSpaceJump del casillero 4"
-	aGame playCard: aReversePolarityCard by: jorgeShip target: 4. "Aplico reversePolarity en el HyperSpaceJump del casillero 4"
+	aGame playCard: aReversePolarityCard by: jorgeShip targetPosition: 4. "Aplico reversePolarity en el HyperSpaceJump del casillero 4"
+	aGame playCard: aReversePolarityCard by: jorgeShip targetPosition: 4. "Aplico reversePolarity en el HyperSpaceJump del casillero 4"
 
 	aGame nextTurn. "Mueve jorge"
 
@@ -685,7 +685,7 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnMoonWalkItsEffectI
 	aDeck := aGame cardsOf: jorgeShip.
 	aReversePolarityCard := aDeck first.
 
-	aGame playCard: aReversePolarityCard by: jorgeShip target: 4. "Aplico reversePolarity en el MoonWalk del casillero 4"
+	aGame playCard: aReversePolarityCard by: jorgeShip targetPosition: 4. "Aplico reversePolarity en el MoonWalk del casillero 4"
 
 	aGame nextTurn. "Mueve jorge"
 
@@ -733,8 +733,8 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnMoonWalkTwiceItsEf
 	aDeck := aGame cardsOf: jorgeShip.
 	aReversePolarityCard := aDeck first.
 
-	aGame playCard: aReversePolarityCard by: jorgeShip target: 4. "Aplico reversePolarity en el MoonWalk del casillero 4"
-	aGame playCard: aReversePolarityCard by: jorgeShip target: 4. "Aplico reversePolarity en el MoonWalk del casillero 4"
+	aGame playCard: aReversePolarityCard by: jorgeShip targetPosition: 4. "Aplico reversePolarity en el MoonWalk del casillero 4"
+	aGame playCard: aReversePolarityCard by: jorgeShip targetPosition: 4. "Aplico reversePolarity en el MoonWalk del casillero 4"
 
 	aGame nextTurn. "Mueve jorge"
 
@@ -778,7 +778,7 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnWormHoleItsEffectI
 	aDeck := aGame cardsOf: jorgeShip.
 	aReversePolarityCard := aDeck first.
 
-	aGame playCard: aReversePolarityCard by: jorgeShip target: 4. "Aplico reversePolarity en el wormhole del casillero 4"
+	aGame playCard: aReversePolarityCard by: jorgeShip targetPosition: 4. "Aplico reversePolarity en el wormhole del casillero 4"
 
 	aGame nextTurn. "Mueve jorge"
 
@@ -828,8 +828,8 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnWormHoleTwiceItsEf
 	aDeck := aGame cardsOf: jorgeShip.
 	aReversePolarityCard := aDeck first.
 
-	aGame playCard: aReversePolarityCard by: jorgeShip target: 4. "Aplico reversePolarity en el wormhole del casillero 4"
-	aGame playCard: aReversePolarityCard by: jorgeShip target: 4. "Aplico reversePolarity en el wormhole del casillero 4"
+	aGame playCard: aReversePolarityCard by: jorgeShip targetPosition: 4. "Aplico reversePolarity en el wormhole del casillero 4"
+	aGame playCard: aReversePolarityCard by: jorgeShip targetPosition: 4. "Aplico reversePolarity en el wormhole del casillero 4"
 
 	aGame nextTurn. "Mueve jorge"
 
@@ -878,7 +878,7 @@ ReversePolarityCardTest >> testCannotUseReversePolarityCardOnEmptySquare [
 	aReversePolarityCard := aDeck first.
 	
 	self
-		should: [ aGame playCard: aReversePolarityCard by: jorgeShip target: 3 ]
+		should: [ aGame playCard: aReversePolarityCard by: jorgeShip targetPosition: 3 ]
 		raise: Error
 		withErrorMessage: 'Cannot reverse the polarity of a non-special square!'
 ]

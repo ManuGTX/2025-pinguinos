@@ -381,13 +381,13 @@ RedoCardTest >> testRedoCardCanBeUsedCorrectlyOnLastPlayedReversePolarityCard [
 	aReversePolarityCard := aDeck first.
 	aSpeedCard := aDeck second.
 
-	aGame playCard: aReversePolarityCard by: jorgeShip target: 4. "Jorge juega ReversePolarity en el blackhole"
+	aGame playCard: aReversePolarityCard by: jorgeShip targetPosition: 4. "Jorge juega ReversePolarity en el blackhole"
 	aGame nextTurn. "jorge mueve a 3"
 
 	aDeck := aGame cardsOf: julianShip.
 	aRedoCard := aDeck first.
 
-	aGame playCard: aRedoCard by: julianShip target: 6. "julian juega redo card sobre y por ende reversepolarity y revierte al blakhole de 6"
+	aGame playCard: aRedoCard by: julianShip targetPosition: 6. "julian juega redo card sobre y por ende reversepolarity y revierte al blakhole de 6"
 
 	aGame nextTurn. "julian mueve al blackhole en 6"
 
