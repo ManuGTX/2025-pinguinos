@@ -15,15 +15,8 @@ AtomicBomb class >> at: aPosition [
 ]
 
 { #category : 'action' }
-AtomicBomb >> applyEffectTo: aShip in: aGame [
+AtomicBomb >> applyNormalEffectTo: aShip in: aGame [
 
-	isReversed ifTrue: [ ^ self ].
 	aGame moveAllShipsBackToStart.
 	aGame breakShieldsOfAllShips
-]
-
-{ #category : 'testing' }
-AtomicBomb >> isSpecial [
-
-	^ true
 ]

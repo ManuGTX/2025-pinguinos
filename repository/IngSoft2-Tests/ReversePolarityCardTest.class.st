@@ -880,7 +880,7 @@ ReversePolarityCardTest >> testCannotUseReversePolarityCardOnEmptySquare [
 	self
 		should: [ aGame playCard: aReversePolarityCard by: jorgeShip targetPosition: 3 ]
 		raise: Error
-		withErrorMessage: 'Cannot reverse the polarity of a non-special square!'
+		withErrorMessage: 'Cannot reverse the polarity of an empty square!'
 ]
 
 { #category : 'basic tests' }

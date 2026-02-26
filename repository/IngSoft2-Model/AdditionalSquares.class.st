@@ -11,6 +11,12 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'testing' }
+AdditionalSquares class >> isAbstract [
+
+	^ self == AdditionalSquares
+]
+
 { #category : 'one more square' }
 AdditionalSquares >> addMovement: aShip [
 	

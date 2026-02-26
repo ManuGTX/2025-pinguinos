@@ -119,7 +119,7 @@ CircularBoardBuilder >> setBoardSize: aSize [
 	
 	map := OrderedCollection new.
 
-	1 to: boardSize do: [ :x | map add: (Square at: x) ].
+	1 to: boardSize do: [ :x | map add: (EmptySquare at: x) ].
 	
 
 ]
@@ -142,7 +142,7 @@ CircularBoardBuilder >> setBoardSizeInParsecs: aParsecSize [
 
 	map := OrderedCollection new.
 
-	1 to: boardSize do: [ :x | map add: (Square at: x) ]
+	1 to: boardSize do: [ :x | map add: (EmptySquare at: x) ]
 ]
 
 { #category : 'initialization' }

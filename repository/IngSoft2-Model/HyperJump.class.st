@@ -20,12 +20,15 @@ HyperJump class >> at: aPosition [
 ]
 
 { #category : 'action' }
-HyperJump >> applyEffectTo: aShip in: aGame [
+HyperJump >> applyNormalEffectTo: aShip in: aGame [
 
-	isReversed
-		ifFalse: [ aGame hyperJump: aShip byParsecs: self parsecsToMove ]
-		ifTrue: [
-		aGame hyperJumpEveryoneExcept: aShip byParsecs: self parsecsToMove ]
+	aGame hyperJump: aShip byParsecs: self parsecsToMove
+]
+
+{ #category : 'action' }
+HyperJump >> applyReverseEffectTo: aShip in: aGame [
+
+	aGame hyperJumpEveryoneExcept: aShip byParsecs: self parsecsToMove
 ]
 
 { #category : 'initialization' }
@@ -38,12 +41,6 @@ HyperJump >> initializeAt: position [
 	super initializeAt: position.
 
 	1 to: parsecListSize do: [ :i | parsecList add: i + 1 ]
-]
-
-{ #category : 'testing' }
-HyperJump >> isSpecial [
-
-	^ true
 ]
 
 { #category : 'accessing' }

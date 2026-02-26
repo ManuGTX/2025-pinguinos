@@ -8,20 +8,22 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'action' }
-HyperSpaceJump >> applyEffectTo: aShip in: aGame [
-
-	isReversed
-		ifFalse: [
-			aGame moveAndIgnoreNewEffectsShip: aShip by: 4.
-			aShip loseShield ]
-		ifTrue: [
-			aGame moveAndIgnoreNewEffectsAllShipsBy: 4 exceptFor: aShip.
-			aGame breakShieldsOfAllShipsExceptFor: aShip ]
+{ #category : 'accessing' }
+HyperSpaceJump class >> at: aPosition [
+	
+	^ self new initializeAt: aPosition.
 ]
 
-{ #category : 'testing' }
-HyperSpaceJump >> isSpecial [
+{ #category : 'action' }
+HyperSpaceJump >> applyNormalEffectTo: aShip in: aGame [
 
-	^ true
+	aGame moveAndIgnoreNewEffectsShip: aShip by: 4.
+	aShip loseShield
+]
+
+{ #category : 'action' }
+HyperSpaceJump >> applyReverseEffectTo: aShip in: aGame [
+
+	aGame moveAndIgnoreNewEffectsAllShipsBy: 4 exceptFor: aShip.
+	aGame breakShieldsOfAllShipsExceptFor: aShip
 ]

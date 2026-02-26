@@ -15,15 +15,13 @@ CardGiver class >> at: aPosition [
 ]
 
 { #category : 'action' }
-CardGiver >> applyEffectTo: aShip in: aGame [
+CardGiver >> applyNormalEffectTo: aShip in: aGame [
 
-	isReversed
-		ifFalse: [ aGame drawCardFor: aShip ]
-		ifTrue: [ aGame drawCardsForEveryoneExceptFor: aShip ]
+	aGame drawCardFor: aShip
 ]
 
-{ #category : 'testing' }
-CardGiver >> isSpecial [
+{ #category : 'action' }
+CardGiver >> applyReverseEffectTo: aShip in: aGame [
 
-	^ true
+	aGame drawCardsForEveryoneExceptFor: aShip
 ]
