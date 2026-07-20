@@ -3,7 +3,7 @@ Implementation of speed card effect, which gives the ship an extra square positi
 "
 Class {
 	#name : 'MercenaryContract',
-	#superclass : 'PermanentEffects',
+	#superclass : 'PermanentEffect',
 	#instVars : [
 		'contractorShip',
 		'contractedShip'
@@ -18,14 +18,24 @@ MercenaryContract class >> from: aShip with: aContractedShip usedBy: aCard [
 	^ self new initializeFrom: aShip with: aContractedShip usedBy: aCard
 ]
 
+{ #category : 'action' }
+MercenaryContract >> applyNormalContractTo: aShip against: anOpponent [
+
+	aShip == contractorShip ifTrue: [ ^ contractedShip ].
+	^ nil
+]
+
+{ #category : 'action' }
+MercenaryContract >> applyReverseContractTo: aShip against: anOpponent [
+
+	anOpponent == contractorShip ifTrue: [ ^ contractedShip ].
+	^ nil
+]
+
 { #category : 'getter' }
 MercenaryContract >> getAllyOf: aShip against: anOpponent [
 
-	isReversed
-		ifFalse: [ aShip == contractorShip ifTrue: [ ^ contractedShip ] ]
-		ifTrue: [ anOpponent == contractorShip ifTrue: [ ^ contractedShip ] ].
-	
-	^ nil
+	^ permanentEffectState getAllyOf: aShip against: anOpponent from: self.
 ]
 
 { #category : 'getter' }
@@ -42,5 +52,6 @@ MercenaryContract >> initializeFrom: aShip with: aContractedShip usedBy: aCard [
 	contractorShip := aShip.
 	contractedShip := aContractedShip.
 	usedBy := aCard.
+
 	^ self
 ]

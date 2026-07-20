@@ -5,53 +5,35 @@ Class {
 	#name : 'Square',
 	#superclass : 'Object',
 	#instVars : [
-		'status',
 		'origin',
-		'isReversed'
+		'squareState'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'accessing' }
-Square class >> at: aXPosition [
-		
-	self validateX: aXPosition.
-		
-	^self new initializeAt: aXPosition.
-]
+{ #category : 'testing' }
+Square class >> isAbstract [
 
-{ #category : 'validation' }
-Square class >> validateX: x [
-	
-	self validateXIsPositive: x.
-	self validateXIsInteger: x.
-]
-
-{ #category : 'validation' }
-Square class >> validateXIsInteger: anXPosition [
-
-	anXPosition isInteger ifFalse: [
-		Error signal: 'X position must be an integer.' ]
-]
-
-{ #category : 'validation' }
-Square class >> validateXIsPositive: aXPosition [
-
-	aXPosition < 0 ifTrue: [
-		Error signal: 'X position must be positive.' ]
+	^ self == Square
 ]
 
 { #category : 'action' }
-Square >> applyEffectTo: aShip in: aGame [ 
+Square >> applyEffectTo: aShip in: aGame [
 
-	^ true
+	squareState applyEffectFrom: self to: aShip in: aGame
 ]
 
-{ #category : 'getter' }
-Square >> checkStatus [
+{ #category : 'action' }
+Square >> applyNormalEffectTo: aShip in: aGame [ 
 
-	^ status
+	^ self
+]
+
+{ #category : 'action' }
+Square >> applyReverseEffectTo: aShip in: aGame [ 
+
+	^ self
 ]
 
 { #category : 'getter' }
@@ -64,14 +46,8 @@ Square >> getPosition [
 Square >> initializeAt: anXPosition [
 
 	origin := anXPosition.
-	isReversed := false.
+	squareState := NormalState new.
 
-]
-
-{ #category : 'testing' }
-Square >> isSpecial [
-
-	^ false
 ]
 
 { #category : 'getter' }
@@ -83,5 +59,5 @@ Square >> landingCoordinate [
 { #category : 'action' }
 Square >> reversePolarity [
 
-	isReversed := isReversed not.
+	squareState := squareState reverse.
 ]

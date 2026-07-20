@@ -320,21 +320,23 @@ ShipBattleGame >> nextTurn [
 { #category : 'card usage' }
 ShipBattleGame >> playCard: aCard by: aShip [ 
 
-	self playCard: aCard by: aShip target: aShip
+	self validateAndPlayCard: aCard from: aShip target: aShip
 ]
 
 { #category : 'card usage' }
 ShipBattleGame >> playCard: aCard by: aShip target: aTarget [
+
+	self validateAndPlayCard: aCard from: aShip target: aTarget
+]
+
+{ #category : 'card usage' }
+ShipBattleGame >> playCard: aCard by: aShip targetPosition: aPosition [
 	
 	| actualTarget |
 	
-	actualTarget := aTarget.
-	aTarget isInteger ifTrue: [ actualTarget := board getSquareAt: aTarget ].
+	actualTarget := board getSquareAt: aPosition.
 	
-	self canIKeepPlaying.
-	self can: aShip playThisCard: aCard.
-	
-	cardManager playCard: aCard by: aShip target: actualTarget.
+	self validateAndPlayCard: aCard from: aShip target: actualTarget
 ]
 
 { #category : 'game controls' }
@@ -361,6 +363,15 @@ ShipBattleGame >> skipTurn [
 	currentShip recoverShields.
 	
 	shipToMove := shipToMove \\ ships size + 1.
+]
+
+{ #category : 'card usage' }
+ShipBattleGame >> validateAndPlayCard: aCard from: aShip target: aTarget [
+	
+	self canIKeepPlaying.
+	self can: aShip playThisCard: aCard.
+	
+	cardManager playCard: aCard by: aShip target: aTarget.
 ]
 
 { #category : 'accessing' }

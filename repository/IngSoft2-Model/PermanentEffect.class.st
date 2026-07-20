@@ -2,50 +2,49 @@
 Implementation of various permanent card effects, which will be stored for using in a turn.
 "
 Class {
-	#name : 'PermanentEffects',
+	#name : 'PermanentEffect',
 	#superclass : 'Object',
 	#instVars : [
 		'usedBy',
-		'isReversed'
+		'permanentEffectState'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'one more square' }
-PermanentEffects >> addMovement: aShip [
+PermanentEffect >> addMovement: aShip [
 
 	^ 0
 ]
 
 { #category : 'getter' }
-PermanentEffects >> getAllyOf: aShip against: anOpponent [
+PermanentEffect >> getAllyOf: aShip against: anOpponent [
 	
 	^ nil
 ]
 
 { #category : 'getter' }
-PermanentEffects >> getCardThatAppliedEffect [
+PermanentEffect >> getCardThatAppliedEffect [
 
 	^ usedBy 
 ]
 
 { #category : 'getter' }
-PermanentEffects >> getContractedMercenary [
+PermanentEffect >> getContractedMercenary [
 	
 	^ nil
 ]
 
 { #category : 'initialization' }
-PermanentEffects >> initialize [
+PermanentEffect >> initialize [
 
 	super initialize.
-	isReversed := false
+	permanentEffectState := NormalState new
 ]
 
 { #category : 'action' }
-PermanentEffects >> reverseEffect [
-
-	isReversed := isReversed not.
+PermanentEffect >> reverseEffect [
 	
+	permanentEffectState := permanentEffectState reverse.
 ]

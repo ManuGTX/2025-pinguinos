@@ -8,16 +8,20 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'action' }
-BlackHole >> applyEffectTo: aShip in: aGame [
-
-	isReversed
-		ifFalse: [ aGame moveAndIgnoreNewEffectsShip: aShip by: -4 ]
-		ifTrue: [ aGame moveAndIgnoreNewEffectsAllShipsBy: -4 exceptFor: aShip ]
+{ #category : 'accessing' }
+BlackHole class >> at: aPosition [
+	
+	^ self new initializeAt: aPosition.
 ]
 
-{ #category : 'testing' }
-BlackHole >> isSpecial [
+{ #category : 'action' }
+BlackHole >> applyNormalEffectTo: aShip in: aGame [
 
-	^ true
+	aGame moveAndIgnoreNewEffectsShip: aShip by: -4
+]
+
+{ #category : 'action' }
+BlackHole >> applyReverseEffectTo: aShip in: aGame [
+
+	aGame moveAndIgnoreNewEffectsAllShipsBy: -4 exceptFor: aShip
 ]

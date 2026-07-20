@@ -8,13 +8,6 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'validating' }
-ReversePolarityCard >> checkIfSquareIsSpecial: aSquare [
-
-	aSquare isSpecial ifFalse: [
-		Error signal: 'Cannot reverse the polarity of a non-special square!' ]
-]
-
 { #category : 'testing' }
 ReversePolarityCard >> isRepeatable [
 
@@ -30,6 +23,5 @@ ReversePolarityCard >> isTurnRestricted [
 { #category : 'action handling' }
 ReversePolarityCard >> managedBy: aCardManager from: anActivatorShip target: aSquare [
 
-	self checkIfSquareIsSpecial: aSquare.
 	aSquare reversePolarity.
 ]
